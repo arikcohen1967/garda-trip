@@ -8,8 +8,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Garda 2026">
 <meta name="application-name" content="Garda Trip V15">
-<meta name="garda-build" content="V17-20260806">
-<title>טיול בת מצווה – אגם גארדה 2026 · V17</title>
+<meta name="garda-build" content="V18-20260806">
+<title>טיול בת מצווה – אגם גארדה 2026 · V18</title>
 <style>
 :root {
   --bg:#07111c; --panel:#102235; --panel2:#152b42; --text:#f7fbff; --muted:#a9bdd0;
@@ -31,6 +31,41 @@ linear-gradient(160deg,rgba(30,115,160,.8),rgba(8,25,40,.96));border-bottom:1px 
 .stat b{display:block;font-size:17px;margin-bottom:4px}
 .stat span{font-size:12px;color:#c7d8e6}
 .wrap{padding:16px;max-width:760px;margin:auto}
+.morning-card{
+  margin:0 0 18px;
+  padding:18px;
+  border-radius:24px;
+  background:
+    radial-gradient(circle at 15% 0%,rgba(255,255,255,.12),transparent 34%),
+    linear-gradient(145deg,#174967,#10283e 58%,#0d1d2d);
+  border:1px solid rgba(109,211,255,.22);
+  box-shadow:0 18px 45px rgba(0,0,0,.24);
+}
+.morning-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.morning-eyebrow{color:#bfeaff;font-size:12px;font-weight:900;letter-spacing:.3px}
+.morning-card h2{margin:5px 0 4px;font-size:24px}
+.morning-date{color:var(--muted);font-size:13px}
+.morning-icon{font-size:42px}
+.morning-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:14px}
+.morning-item{padding:12px;border-radius:16px;background:rgba(255,255,255,.065);border:1px solid var(--line)}
+.morning-item small{display:block;color:var(--muted);margin-bottom:5px}
+.morning-item b{font-size:14px;line-height:1.35}
+.morning-note{margin-top:11px;padding:12px;border-radius:15px;background:rgba(255,177,91,.10);border:1px solid rgba(255,177,91,.18);font-size:13px;line-height:1.55}
+.morning-quote{margin:11px 0 0;color:#d9f2ff;font-size:13px;font-style:italic;line-height:1.5}
+.morning-memory{display:none;margin-top:12px;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:rgba(0,0,0,.20)}
+.morning-memory.show{display:block}
+.morning-memory img{width:100%;max-height:230px;object-fit:cover;display:block}
+.morning-memory span{display:block;padding:9px 11px;color:var(--muted);font-size:12px}
+.morning-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.morning-actions button,.morning-actions a{
+  border:0;border-radius:14px;padding:12px 9px;font:inherit;font-weight:900;
+  text-align:center;cursor:pointer;color:white;background:#1b4c6c;
+}
+.morning-actions .primary{background:var(--green);color:#06291d}
+@media(max-width:430px){
+  .morning-grid{grid-template-columns:1fr}
+}
+
 .quick{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
 .quick a,.quick button{position:relative;z-index:2;touch-action:manipulation;-webkit-tap-highlight-color:rgba(255,255,255,.12);cursor:pointer;padding:15px;border-radius:18px;background:var(--panel);border:1px solid var(--line);font-weight:700;text-align:center;color:var(--text)}
 .day-card{background:linear-gradient(180deg,var(--panel),#0d1c2c);border:1px solid var(--line);
@@ -157,11 +192,11 @@ display:grid;grid-template-columns:repeat(4,1fr);gap:3px;will-change:transform}
 }
 </style>
 </head>
-<body data-garda-version="V17" data-garda-build="20260806">
+<body data-garda-version="V18" data-garda-build="20260806">
 <header class="hero" id="home">
   <div class="kicker">משפחת כהן · טיול בת מצווה</div>
   <h1>אגם גארדה וונציה 2026</h1>
-  <p>גרסה 17 · Around Me מהיר ויציב באייפון, מצלמה וחניה חכמה</p>
+  <p>גרסה 18 · מסך בוקר חכם, זיכרונות, ניווט וכל הכלים הקיימים</p>
   <div class="hero-grid">
     <div class="stat"><b>7 ימים</b><span>פארקים, טבע, ערים ואגם</span></div>
     <div class="stat"><b>בסיס הטיול</b><span>Bio Agriturismo Vojon</span></div>
@@ -169,6 +204,50 @@ display:grid;grid-template-columns:repeat(4,1fr);gap:3px;will-change:transform}
 </header>
 
 <main class="wrap">
+  <section class="morning-card" id="morningDashboard" aria-live="polite">
+    <div class="morning-top">
+      <div>
+        <div class="morning-eyebrow">המלווה האישי של הטיול</div>
+        <h2 id="morningGreeting">בוקר טוב, משפחת כהן!</h2>
+        <div class="morning-date" id="morningDate"></div>
+      </div>
+      <div class="morning-icon" id="morningIcon">🇮🇹</div>
+    </div>
+
+    <div class="morning-grid">
+      <div class="morning-item">
+        <small>📍 היעד הראשון</small>
+        <b id="morningDestination">טוען...</b>
+      </div>
+      <div class="morning-item">
+        <small>⏰ יציאה מומלצת</small>
+        <b id="morningDeparture">לפי תוכנית היום</b>
+      </div>
+      <div class="morning-item">
+        <small>🎒 מה חשוב לקחת</small>
+        <b id="morningPacking">טלפונים טעונים ומים</b>
+      </div>
+      <div class="morning-item">
+        <small>🌤️ מזג האוויר</small>
+        <b><button type="button" onclick="openWeatherSearch()" style="all:unset;cursor:pointer;text-decoration:underline">בדיקה לפי המיקום</button></b>
+      </div>
+    </div>
+
+    <div class="morning-note" id="morningNote"></div>
+    <p class="morning-quote" id="morningQuote"></p>
+
+    <div class="morning-memory" id="morningMemory">
+      <img id="morningMemoryImage" alt="זיכרון מהיום הקודם">
+      <span id="morningMemoryText">📸 זיכרון מהיום הקודם</span>
+    </div>
+
+    <div class="morning-actions">
+      <button type="button" class="primary" onclick="navigateMorningDestination()">🚗 נווט ליעד הראשון</button>
+      <button type="button" onclick="openMorningMemories()">📸 הזיכרונות</button>
+      <button type="button" onclick="openFoodToday()">🍕 מה נאכל היום?</button>
+      <a href="#emergency">🚨 מצב חירום</a>
+    </div>
+  </section>
   <div class="quick" id="quickActions">
     <button id="quickToday" type="button">✨ היום שלי</button>
     <a id="quickRoute" href="#days">📅 כל המסלול</a>
@@ -726,6 +805,167 @@ display:grid;grid-template-columns:repeat(4,1fr);gap:3px;will-change:transform}
 
 <script>
 const tripDays = [{"date": "2026-09-30", "label": "רביעי · 30.09.2026", "title": "נחיתה והגעה למלון", "icon": "✈️", "challenge": "לצלם את התמונה המשפחתית הראשונה באיטליה.", "stops": [{"time": "16:00", "name": "נחיתה בנמל התעופה ורונה", "dest": "Verona Villafranca Airport", "note": "איסוף מזוודות ורכב שכור."}, {"time": "18:00", "name": "נסיעה למלון", "dest": "Via del Forte 6, 46040 Ponti sul Mincio MN, Italy", "note": "צ'ק-אין והתארגנות רגועה."}]}, {"date": "2026-10-01", "label": "חמישי · 01.10.2026", "title": "Gardaland", "icon": "🎢", "challenge": "לבחור יחד את המתקן הכי טוב של היום.", "stops": [{"time": "08:30", "name": "יציאה ל-Gardaland", "dest": "Gardaland Resort, Via Derna 4, Castelnuovo del Garda", "note": "מומלץ להגיע לפני פתיחת השערים."}, {"time": "יום מלא", "name": "Gardaland", "dest": "Gardaland Resort, Via Derna 4, Castelnuovo del Garda", "note": "לשמור את הכרטיסים גם כצילום מסך."}, {"time": "ערב", "name": "חזרה למלון", "dest": "Via del Forte 6, 46040 Ponti sul Mincio MN, Italy", "note": "ניווט ישיר חזרה למלון."}]}, {"date": "2026-10-02", "label": "שישי · 02.10.2026", "title": "Movieland ומופע אבירים", "icon": "🎬", "challenge": "לצלם סלפי בסגנון סרט.", "stops": [{"time": "בוקר", "name": "Movieland", "dest": "Movieland The Hollywood Park, Via Fossalta 58, Lazise", "note": "להגיע מוקדם כדי להספיק את המתקנים המרכזיים."}, {"time": "לפי ההזמנה", "name": "Medieval Times", "dest": "Medieval Times, Via Fossalta 58, Lazise", "note": "יש לבדוק את שעת המופע המדויקת מראש."}, {"time": "ערב", "name": "חזרה למלון", "dest": "Via del Forte 6, 46040 Ponti sul Mincio MN, Italy", "note": "מומלץ להביא שכבה דקה לערב."}]}, {"date": "2026-10-03", "label": "שבת · 03.10.2026", "title": "סובב אגם וראפטינג", "icon": "🚣", "challenge": "למצוא נקודת תצפית אחת שאף אחד לא רוצה לעזוב.", "stops": [{"time": "בוקר", "name": "מרכז הראפטינג", "dest": "Rafting Center Valdadige, Brentino Belluno, Verona", "note": "לעדכן לפי שם החברה המדויק באישור ההזמנה."}, {"time": "צהריים", "name": "נסיעה נופית סביב האגם", "dest": "Lake Garda, Italy", "note": "לעצור בנקודות תצפית בהתאם לזמן ולמזג האוויר."}, {"time": "ערב", "name": "חזרה למלון", "dest": "Via del Forte 6, 46040 Ponti sul Mincio MN, Italy", "note": "להכין בגדים ונעליים להחלפה."}]}, {"date": "2026-10-04", "label": "ראשון · 04.10.2026", "title": "מלצ'סינה, מונטה באלדו ולימונה", "icon": "🏔️", "challenge": "לצלם תמונת פסגה משפחתית.", "stops": [{"time": "08:30", "name": "חניון רכבל מלצ'סינה", "dest": "Parcheggio Funivia Malcesine Monte Baldo, Via Navene Vecchia 12, Malcesine", "note": "חניון נוח ליד תחנת הרכבל."}, {"time": "בוקר", "name": "רכבל מונטה באלדו", "dest": "Funivia Malcesine Monte Baldo", "note": "לבדוק בבוקר רוח ומצב פעילות הרכבל."}, {"time": "אחה״צ", "name": "לימונה סול גארדה", "dest": "Limone sul Garda, Italy", "note": "לבדוק אם המעבר יהיה במעבורת או ברכב."}, {"time": "ערב", "name": "חזרה למלון", "dest": "Via del Forte 6, 46040 Ponti sul Mincio MN, Italy", "note": "זהו יום נסיעות ארוך יחסית."}]}, {"date": "2026-10-05", "label": "שני · 05.10.2026", "title": "ונציה", "icon": "🛶", "challenge": "למצוא גשר קטן ויפה מחוץ למסלול הראשי.", "stops": [{"time": "בוקר", "name": "בוקר רגוע במלון", "dest": "Via del Forte 6, 46040 Ponti sul Mincio MN, Italy", "note": "ארוחת בוקר ויציאה בנחת."}, {"time": "צהריים", "name": "חניון Tronchetto בוונציה", "dest": "Venezia Tronchetto Parking, Isola Nova del Tronchetto 33, Venezia", "note": "לשמור צילום של מיקום הרכב והקומה."}, {"time": "ערב", "name": "Piazzale Roma / מרכז ונציה", "dest": "Piazzale Roma, Venezia", "note": "ממשיכים ברגל או בתחבורה ציבורית."}]}, {"date": "2026-10-06", "label": "שלישי · 06.10.2026", "title": "ונציה, ורונה והטיסה", "icon": "🏛️", "challenge": "לבחור יחד את רגע השיא של הטיול.", "stops": [{"time": "בוקר", "name": "סיור אחרון בוונציה", "dest": "Piazza San Marco, Venezia", "note": "להשאיר מספיק זמן לחזרה לרכב."}, {"time": "צהריים", "name": "חניון מרכז ורונה", "dest": "Parcheggio Cittadella, Piazza Cittadella, Verona", "note": "סיור קצר בארנה ובמרכז ההיסטורי."}, {"time": "18:30", "name": "החזרת הרכב בשדה", "dest": "Verona Villafranca Airport", "note": "להשאיר זמן לתדלוק ולהחזרת הרכב."}]}];
+
+const morningConfig = [
+  {
+    packing:'דרכונים, רישיון נהיגה, מטענים ומסמכי הרכב',
+    note:'✈️ היום מתחילים את ההרפתקה. אחרי הנחיתה נוסעים למלון ומתארגנים בנחת.',
+    quote:'היום מתחיל סיפור משפחתי שתזכרו עוד שנים.',
+    departure:'לאחר איסוף הרכב'
+  },
+  {
+    packing:'כרטיסים, בקבוקי מים, כובעים וסוללה ניידת',
+    note:'🎢 מומלץ להגיע לפני פתיחת השערים ולשמור צילום מסך של הכרטיסים.',
+    quote:'היום מחכה לכן הרפתקה חדשה!',
+    departure:'08:30'
+  },
+  {
+    packing:'כרטיסים למופע, שכבה דקה לערב וטלפונים טעונים',
+    note:'🎬 יום הסרטים והאבירים. כדאי להגיע מוקדם ולשמור כוח לערב.',
+    quote:'המצלמה מוכנה? היום כל תמונה יכולה להפוך לסצנה מסרט.',
+    departure:'בבוקר'
+  },
+  {
+    packing:'בגדים ונעליים להחלפה, מגבות ומים',
+    note:'🚣 יום ראפטינג ונופים. שמרו בגדים יבשים זמינים ברכב.',
+    quote:'היום יוצאים מהמסלול הרגיל ויוצרים זיכרונות מיוחדים.',
+    departure:'לפי שעת ההזמנה'
+  },
+  {
+    packing:'בגד חם, נעליים נוחות, מים ומצלמה',
+    note:'🏔️ לפני היציאה כדאי לבדוק רוח ופעילות הרכבל במונטה באלדו.',
+    quote:'היום העולם נראה יפה יותר מלמעלה.',
+    departure:'08:30'
+  },
+  {
+    packing:'נעליים נוחות, סוללה ניידת וצילום של מיקום הרכב',
+    note:'🛶 בוונציה כדאי לשמור צילום של החניון, הקומה והמסלול חזרה.',
+    quote:'לכו לאיבוד בסמטאות — אבל שמרו את הדרך חזרה לרכב.',
+    departure:'בצהריים'
+  },
+  {
+    packing:'מזוודות מסודרות, מסמכי טיסה ודלק להחזרת הרכב',
+    note:'🏛️ זה היום האחרון. השאירו מספיק זמן לחזרה לרכב ולשדה התעופה.',
+    quote:'לפני שחוזרים, בחרו יחד את רגע השיא של הטיול.',
+    departure:'לפי תוכנית הטיסה'
+  }
+];
+
+let morningDayIndex = 0;
+
+function resolveMorningDayIndex() {
+  const today = new Date();
+  const iso = [
+    today.getFullYear(),
+    String(today.getMonth()+1).padStart(2,'0'),
+    String(today.getDate()).padStart(2,'0')
+  ].join('-');
+
+  const exact = tripDays.findIndex(day => day.date === iso);
+  if (exact >= 0) return exact;
+
+  const first = new Date(tripDays[0].date + 'T00:00:00');
+  const last = new Date(tripDays[tripDays.length - 1].date + 'T23:59:59');
+
+  if (today < first) return 0;
+  if (today > last) return tripDays.length - 1;
+
+  let closest = 0;
+  let smallest = Infinity;
+  tripDays.forEach((day, index) => {
+    const diff = Math.abs(new Date(day.date + 'T12:00:00') - today);
+    if (diff < smallest) {
+      smallest = diff;
+      closest = index;
+    }
+  });
+  return closest;
+}
+
+function greetingByHour() {
+  const hour = new Date().getHours();
+  if (hour < 12) return 'בוקר טוב, משפחת כהן!';
+  if (hour < 18) return 'צהריים טובים, משפחת כהן!';
+  return 'ערב טוב, משפחת כהן!';
+}
+
+function renderMorningDashboard() {
+  morningDayIndex = resolveMorningDayIndex();
+  const day = tripDays[morningDayIndex];
+  const config = morningConfig[morningDayIndex] || morningConfig[0];
+  const firstStop = day.stops[0];
+
+  document.getElementById('morningGreeting').textContent = greetingByHour();
+  document.getElementById('morningDate').textContent =
+    `יום ${morningDayIndex + 1} מתוך ${tripDays.length} · ${day.label} · ${day.title}`;
+  document.getElementById('morningIcon').textContent = day.icon;
+  document.getElementById('morningDestination').textContent = firstStop.name;
+  document.getElementById('morningDeparture').textContent =
+    config.departure || firstStop.time || 'לפי תוכנית היום';
+  document.getElementById('morningPacking').textContent = config.packing;
+  document.getElementById('morningNote').textContent = config.note;
+  document.getElementById('morningQuote').textContent = `“${config.quote}”`;
+
+  restoreMorningMemory();
+}
+
+function navigateMorningDestination() {
+  const stop = tripDays[morningDayIndex].stops[0];
+  const url = 'https://www.waze.com/ul?q=' + encodeURIComponent(stop.dest) + '&navigate=yes';
+  window.location.href = url;
+}
+
+function openMorningMemories() {
+  const target = document.querySelector(`.challenge[data-challenge-day="${morningDayIndex}"]`)
+    || document.querySelector(`#day-${morningDayIndex} .challenge`);
+  if (target) target.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+function openFoodToday() {
+  openAround();
+  setTimeout(() => {
+    const first = document.querySelector('#aroundModal .around-grid button');
+    if (first) first.focus();
+  }, 150);
+}
+
+function openWeatherSearch() {
+  const query = 'weather near me';
+  window.location.href =
+    'https://www.google.com/search?q=' + encodeURIComponent(query);
+}
+
+async function restoreMorningMemory() {
+  const memoryBox = document.getElementById('morningMemory');
+  const image = document.getElementById('morningMemoryImage');
+  const label = document.getElementById('morningMemoryText');
+  const previousDay = morningDayIndex - 1;
+
+  if (previousDay < 0 || typeof challengeDB === 'undefined') {
+    memoryBox.classList.remove('show');
+    return;
+  }
+
+  try {
+    const record = await challengeDB.get(previousDay);
+    if (!record || !record.blob) {
+      memoryBox.classList.remove('show');
+      return;
+    }
+
+    if (image.dataset.objectUrl) URL.revokeObjectURL(image.dataset.objectUrl);
+    const objectUrl = URL.createObjectURL(record.blob);
+    image.src = objectUrl;
+    image.dataset.objectUrl = objectUrl;
+    label.textContent = `📸 זיכרון מאתמול · ${tripDays[previousDay].title}`;
+    memoryBox.classList.add('show');
+  } catch (error) {
+    console.warn('Morning memory unavailable', error);
+    memoryBox.classList.remove('show');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', renderMorningDashboard);
 let activeDay = 0;
 let activeStop = 0;
 let activeChallengeDay = null;
