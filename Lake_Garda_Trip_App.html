@@ -8,8 +8,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Garda 2026">
 <meta name="application-name" content="Garda Trip V15">
-<meta name="garda-build" content="V16-20260806">
-<title>טיול בת מצווה – אגם גארדה 2026 · V16</title>
+<meta name="garda-build" content="V17-20260806">
+<title>טיול בת מצווה – אגם גארדה 2026 · V17</title>
 <style>
 :root {
   --bg:#07111c; --panel:#102235; --panel2:#152b42; --text:#f7fbff; --muted:#a9bdd0;
@@ -157,11 +157,11 @@ display:grid;grid-template-columns:repeat(4,1fr);gap:3px;will-change:transform}
 }
 </style>
 </head>
-<body data-garda-version="V16" data-garda-build="20260806">
+<body data-garda-version="V17" data-garda-build="20260806">
 <header class="hero" id="home">
   <div class="kicker">משפחת כהן · טיול בת מצווה</div>
   <h1>אגם גארדה וונציה 2026</h1>
-  <p>גרסה 16 · תיקון Around Me באייפון, מצלמה וחניה חכמה</p>
+  <p>גרסה 17 · Around Me מהיר ויציב באייפון, מצלמה וחניה חכמה</p>
   <div class="hero-grid">
     <div class="stat"><b>7 ימים</b><span>פארקים, טבע, ערים ואגם</span></div>
     <div class="stat"><b>בסיס הטיול</b><span>Bio Agriturismo Vojon</span></div>
@@ -1148,49 +1148,15 @@ function searchNearby(term) {
   };
 
   const label = labels[term] || term;
-  const fallbackUrl =
+
+  // Open Google Maps immediately in the same window.
+  // Google Maps will use the phone's current location permission directly.
+  const url =
     'https://www.google.com/maps/search/?api=1&query=' +
-    encodeURIComponent(term + ' near me');
+    encodeURIComponent(label + ' near me');
 
-  const buttons = document.querySelectorAll('#aroundModal .around-grid button');
-  buttons.forEach(button => {
-    button.disabled = true;
-    button.style.opacity = '.65';
-  });
-
-  requestCurrentPosition(pos => {
-    const lat = pos.coords.latitude.toFixed(6);
-    const lng = pos.coords.longitude.toFixed(6);
-
-    closeAround();
-
-    const url =
-      'https://www.google.com/maps/search/?api=1&query=' +
-      encodeURIComponent(term) +
-      '&center=' +
-      encodeURIComponent(lat + ',' + lng);
-
-    window.location.assign(url);
-  }, error => {
-    buttons.forEach(button => {
-      button.disabled = false;
-      button.style.opacity = '';
-    });
-
-    const useFallback = confirm(
-      locationErrorMessage(error) +
-      '
-
-לפתוח בכל זאת חיפוש כללי של ' +
-      label +
-      ' ב-Google Maps?'
-    );
-
-    if (useFallback) {
-      closeAround();
-      window.location.assign(fallbackUrl);
-    }
-  });
+  closeAround();
+  window.location.href = url;
 }
 
 function getExpenses() {
