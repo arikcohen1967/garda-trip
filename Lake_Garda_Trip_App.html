@@ -8,8 +8,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Garda 2026">
 <meta name="application-name" content="Garda Trip V15">
-<meta name="garda-build" content="V18-20260806">
-<title>טיול בת מצווה – אגם גארדה 2026 · V18</title>
+<meta name="garda-build" content="V19-20260806">
+<title>טיול בת מצווה – אגם גארדה 2026 · V19</title>
 <style>
 :root {
   --bg:#07111c; --panel:#102235; --panel2:#152b42; --text:#f7fbff; --muted:#a9bdd0;
@@ -65,6 +65,80 @@ linear-gradient(160deg,rgba(30,115,160,.8),rgba(8,25,40,.96));border-bottom:1px 
 @media(max-width:430px){
   .morning-grid{grid-template-columns:1fr}
 }
+.feature-row{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:9px;
+  margin:0 0 18px;
+}
+.feature-row button{
+  border:1px solid var(--line);
+  border-radius:17px;
+  padding:14px 10px;
+  background:linear-gradient(180deg,#173b56,#11283c);
+  color:white;
+  font:inherit;
+  font-weight:900;
+  cursor:pointer;
+}
+.drive-card,.food-card,.memory-card,.emergency-card{
+  background:linear-gradient(180deg,#132b40,#0c1b2b);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:15px;
+  margin-top:12px;
+}
+.drive-destination{font-size:24px;font-weight:950;margin:8px 0}
+.drive-meta{color:var(--muted);font-size:13px;line-height:1.55}
+.drive-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:14px}
+.drive-actions a,.drive-actions button{
+  border:0;border-radius:14px;padding:13px 8px;font:inherit;font-weight:900;text-align:center
+}
+.drive-next{background:var(--green);color:#05291d}
+.drive-map{background:#2f6fdf;color:white}
+.food-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:12px}
+.food-grid button{
+  border:0;border-radius:15px;padding:14px 9px;background:#183a52;color:white;font-weight:900
+}
+.memory-summary{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin:12px 0
+}
+.memory-stat{
+  padding:12px;border-radius:15px;background:rgba(255,255,255,.06);border:1px solid var(--line)
+}
+.memory-stat b{display:block;font-size:22px}
+.memory-stat span{font-size:12px;color:var(--muted)}
+.memory-gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.memory-tile{
+  overflow:hidden;border-radius:16px;background:rgba(255,255,255,.06);border:1px solid var(--line)
+}
+.memory-tile img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover}
+.memory-tile div{padding:8px;font-size:11px;color:var(--muted)}
+.memory-empty{padding:20px;text-align:center;color:var(--muted)}
+.emergency-location{
+  padding:12px;border-radius:15px;background:rgba(255,255,255,.06);
+  border:1px solid var(--line);font-size:13px;line-height:1.55;margin-bottom:12px
+}
+.emergency-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.emergency-actions button,.emergency-actions a{
+  border:0;border-radius:15px;padding:13px 8px;background:#502331;color:white;
+  text-align:center;font:inherit;font-weight:900
+}
+.surprise-box{
+  margin-top:11px;padding:12px;border-radius:15px;
+  background:linear-gradient(135deg,rgba(109,74,255,.22),rgba(255,177,91,.12));
+  border:1px solid rgba(197,175,255,.24);font-size:13px;line-height:1.55
+}
+.offline-pill{
+  display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:7px 10px;
+  border-radius:999px;background:rgba(255,255,255,.07);border:1px solid var(--line);
+  color:var(--muted);font-size:11px;font-weight:800
+}
+@media(max-width:430px){
+  .feature-row,.food-grid,.emergency-actions{grid-template-columns:1fr 1fr}
+  .memory-gallery{grid-template-columns:1fr 1fr}
+}
+
 
 .quick{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
 .quick a,.quick button{position:relative;z-index:2;touch-action:manipulation;-webkit-tap-highlight-color:rgba(255,255,255,.12);cursor:pointer;padding:15px;border-radius:18px;background:var(--panel);border:1px solid var(--line);font-weight:700;text-align:center;color:var(--text)}
@@ -192,11 +266,11 @@ display:grid;grid-template-columns:repeat(4,1fr);gap:3px;will-change:transform}
 }
 </style>
 </head>
-<body data-garda-version="V18" data-garda-build="20260806">
+<body data-garda-version="V19" data-garda-build="20260806">
 <header class="hero" id="home">
   <div class="kicker">משפחת כהן · טיול בת מצווה</div>
   <h1>אגם גארדה וונציה 2026</h1>
-  <p>גרסה 18 · מסך בוקר חכם, זיכרונות, ניווט וכל הכלים הקיימים</p>
+  <p>גרסה 19 · בוקר חכם, מצב נהיגה, אוכל, זיכרונות, חירום ואופליין</p>
   <div class="hero-grid">
     <div class="stat"><b>7 ימים</b><span>פארקים, טבע, ערים ואגם</span></div>
     <div class="stat"><b>בסיס הטיול</b><span>Bio Agriturismo Vojon</span></div>
@@ -235,6 +309,8 @@ display:grid;grid-template-columns:repeat(4,1fr);gap:3px;will-change:transform}
 
     <div class="morning-note" id="morningNote"></div>
     <p class="morning-quote" id="morningQuote"></p>
+    <div class="surprise-box" id="morningSurprise"></div>
+    <div class="offline-pill" id="offlineStatus">🌐 מצב מקוון</div>
 
     <div class="morning-memory" id="morningMemory">
       <img id="morningMemoryImage" alt="זיכרון מהיום הקודם">
@@ -248,6 +324,14 @@ display:grid;grid-template-columns:repeat(4,1fr);gap:3px;will-change:transform}
       <a href="#emergency">🚨 מצב חירום</a>
     </div>
   </section>
+
+  <div class="feature-row" aria-label="כלים חכמים">
+    <button type="button" onclick="openDriveMode()">🚗 מצב נהיגה</button>
+    <button type="button" onclick="openFoodMode()">🍕 מה נאכל היום?</button>
+    <button type="button" onclick="openMemoriesMode()">📸 זיכרונות חכמים</button>
+    <button type="button" onclick="openEmergencyMode()">🚨 מצב חירום</button>
+  </div>
+
   <div class="quick" id="quickActions">
     <button id="quickToday" type="button">✨ היום שלי</button>
     <a id="quickRoute" href="#days">📅 כל המסלול</a>
@@ -797,6 +881,86 @@ display:grid;grid-template-columns:repeat(4,1fr);gap:3px;will-change:transform}
 </div>
 
 
+
+<div class="modal" id="driveModal" onclick="closeDriveBackdrop(event)">
+  <div class="sheet">
+    <div class="sheet-head">
+      <h2 style="margin:0">🚗 מצב נהיגה</h2>
+      <button class="close" type="button" onclick="closeDriveMode()">סגור</button>
+    </div>
+    <div class="drive-card">
+      <small style="color:var(--muted)">היעד הבא</small>
+      <div class="drive-destination" id="driveDestination">טוען...</div>
+      <div class="drive-meta" id="driveMeta"></div>
+      <div class="drive-actions">
+        <a id="driveWaze" class="drive-next">פתח ב-Waze</a>
+        <a id="driveMaps" class="drive-map">Google Maps</a>
+      </div>
+      <button class="small-btn" type="button" onclick="advanceDriveStop()">סמן כבוצע ועבור ליעד הבא</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="foodModal" onclick="closeFoodBackdrop(event)">
+  <div class="sheet">
+    <div class="sheet-head">
+      <h2 style="margin:0">🍕 מה נאכל היום?</h2>
+      <button class="close" type="button" onclick="closeFoodMode()">סגור</button>
+    </div>
+    <div class="food-card">
+      <p style="margin-top:0;color:var(--muted)">בחרו מה מתחשק לכם. Google Maps יחפש מקומות קרובים למיקום הנוכחי.</p>
+      <div class="food-grid">
+        <button onclick="searchFood('pizza')">🍕 פיצה</button>
+        <button onclick="searchFood('pasta')">🍝 פסטה</button>
+        <button onclick="searchFood('hamburger')">🍔 המבורגר</button>
+        <button onclick="searchFood('steakhouse')">🥩 סטייק</button>
+        <button onclick="searchFood('gelato')">🍦 גלידה</button>
+        <button onclick="searchFood('cafe')">☕ קפה</button>
+        <button onclick="searchFood('healthy food')">🥗 אוכל בריא</button>
+        <button onclick="searchFood('family restaurant')">👨‍👧‍👧 משפחתי</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="memoriesModal" onclick="closeMemoriesBackdrop(event)">
+  <div class="sheet">
+    <div class="sheet-head">
+      <h2 style="margin:0">📸 זיכרונות חכמים</h2>
+      <button class="close" type="button" onclick="closeMemoriesMode()">סגור</button>
+    </div>
+    <div class="memory-card">
+      <div class="memory-summary">
+        <div class="memory-stat"><b id="memoryPhotoCount">0</b><span>תמונות שמורות</span></div>
+        <div class="memory-stat"><b id="memoryChallengeCount">0</b><span>אתגרים שהושלמו</span></div>
+      </div>
+      <div class="memory-gallery" id="memoryGallery"></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="emergencyModeModal" onclick="closeEmergencyBackdrop(event)">
+  <div class="sheet">
+    <div class="sheet-head">
+      <h2 style="margin:0">🚨 מצב חירום</h2>
+      <button class="close" type="button" onclick="closeEmergencyMode()">סגור</button>
+    </div>
+    <div class="emergency-card">
+      <div class="emergency-location" id="emergencyLocation">לחץ על „הצג מיקום” כדי לקבל את המיקום הנוכחי.</div>
+      <div class="emergency-actions">
+        <button onclick="showEmergencyLocation()">📍 הצג מיקום</button>
+        <button onclick="copyEmergencyLocation()">📋 העתק מיקום</button>
+        <a href="tel:112">☎️ חירום 112</a>
+        <a href="tel:118">🚑 אמבולנס 118</a>
+        <button onclick="openEmergencySearch('hospital')">🏥 בית חולים קרוב</button>
+        <button onclick="openEmergencySearch('pharmacy')">💊 בית מרקחת קרוב</button>
+        <button onclick="navigateHotelEmergency()">🏨 ניווט למלון</button>
+        <button onclick="openParking()">🚘 איפה הרכב?</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <input id="challengeCameraInput"
        type="file"
        accept="image/*"
@@ -965,7 +1129,204 @@ async function restoreMorningMemory() {
   }
 }
 
+
 document.addEventListener('DOMContentLoaded', renderMorningDashboard);
+
+const dailySurprises = [
+  '🎁 צלמו את הרגע הראשון שבו כולכם אומרים: “אנחנו באמת באיטליה!”',
+  '🎁 ב-Gardaland בחרו מתקן אחד שכל המשפחה עושה יחד.',
+  '🎁 מצאו פינה שנראית כמו סט של סרט וצלמו תמונה דרמטית.',
+  '🎁 עצרו בנקודת תצפית לא מתוכננת ובחרו לה שם משפחתי.',
+  '🎁 בפסגה, כל אחת בוחרת מילה אחת שמתארת את הנוף.',
+  '🎁 בוונציה נסו למצוא גשר קטן שלא מופיע במסלול התיירים הראשי.',
+  '🎁 כל אחת בוחרת את רגע השיא שלה מהטיול ומספרת למה.'
+];
+
+function renderSurprise() {
+  const el = document.getElementById('morningSurprise');
+  if (el) el.textContent = dailySurprises[morningDayIndex] || dailySurprises[0];
+}
+
+function updateOfflineStatus() {
+  const el = document.getElementById('offlineStatus');
+  if (!el) return;
+  if (navigator.onLine) {
+    el.textContent = '🌐 מצב מקוון';
+  } else {
+    el.textContent = '📴 מצב אופליין — המידע השמור זמין';
+  }
+}
+
+window.addEventListener('online', updateOfflineStatus);
+window.addEventListener('offline', updateOfflineStatus);
+document.addEventListener('DOMContentLoaded', () => {
+  renderSurprise();
+  updateOfflineStatus();
+  registerGardaServiceWorker();
+});
+
+function registerGardaServiceWorker() {
+  if (!('serviceWorker' in navigator)) return;
+  navigator.serviceWorker.register('./service-worker.js').catch(error => {
+    console.warn('Service worker registration failed', error);
+  });
+}
+
+// Drive Mode
+let driveDayIndex = 0;
+let driveStopIndex = 0;
+
+function resolveDrivePosition() {
+  driveDayIndex = typeof morningDayIndex === 'number' ? morningDayIndex : 0;
+  const stops = tripDays[driveDayIndex].stops;
+  driveStopIndex = 0;
+  for (let i = 0; i < stops.length; i++) {
+    const checkbox = document.querySelector(`[data-key="day${driveDayIndex}-stop${i}"]`);
+    if (!checkbox || !checkbox.checked) {
+      driveStopIndex = i;
+      return;
+    }
+  }
+  driveStopIndex = Math.max(0, stops.length - 1);
+}
+
+function renderDriveMode() {
+  resolveDrivePosition();
+  const day = tripDays[driveDayIndex];
+  const stop = day.stops[driveStopIndex];
+
+  document.getElementById('driveDestination').textContent = stop.name;
+  document.getElementById('driveMeta').textContent =
+    `${day.label} · ${stop.time} · ${stop.note || ''}`;
+
+  document.getElementById('driveWaze').href =
+    'https://www.waze.com/ul?q=' + encodeURIComponent(stop.dest) + '&navigate=yes';
+  document.getElementById('driveMaps').href =
+    'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(stop.dest);
+}
+
+function openDriveMode() {
+  renderDriveMode();
+  document.getElementById('driveModal').classList.add('open');
+}
+function closeDriveMode() { document.getElementById('driveModal').classList.remove('open'); }
+function closeDriveBackdrop(e) { if (e.target.id === 'driveModal') closeDriveMode(); }
+
+function advanceDriveStop() {
+  const checkbox = document.querySelector(`[data-key="day${driveDayIndex}-stop${driveStopIndex}"]`);
+  if (checkbox) {
+    checkbox.checked = true;
+    checkbox.dispatchEvent(new Event('change', {bubbles:true}));
+  }
+  renderDriveMode();
+}
+
+// Food Mode
+function openFoodMode() { document.getElementById('foodModal').classList.add('open'); }
+function closeFoodMode() { document.getElementById('foodModal').classList.remove('open'); }
+function closeFoodBackdrop(e) { if (e.target.id === 'foodModal') closeFoodMode(); }
+function searchFood(term) {
+  closeFoodMode();
+  const url = 'https://www.google.com/maps/search/?api=1&query=' +
+    encodeURIComponent(term + ' near me');
+  window.location.href = url;
+}
+
+// Memories
+function openMemoriesMode() {
+  document.getElementById('memoriesModal').classList.add('open');
+  renderMemoriesGallery();
+}
+function closeMemoriesMode() { document.getElementById('memoriesModal').classList.remove('open'); }
+function closeMemoriesBackdrop(e) { if (e.target.id === 'memoriesModal') closeMemoriesMode(); }
+
+async function renderMemoriesGallery() {
+  const gallery = document.getElementById('memoryGallery');
+  gallery.innerHTML = '';
+  let count = 0;
+
+  for (let i = 0; i < tripDays.length; i++) {
+    try {
+      const record = await challengeDB.get(i);
+      if (!record || !record.blob) continue;
+      count++;
+
+      const tile = document.createElement('div');
+      tile.className = 'memory-tile';
+      const url = URL.createObjectURL(record.blob);
+      tile.innerHTML = `<img src="${url}" alt="זיכרון מיום ${i+1}">
+        <div>יום ${i+1} · ${tripDays[i].title}<br>${formatChallengePhotoTime(record.savedAt)}</div>`;
+      gallery.appendChild(tile);
+    } catch (error) {
+      console.warn('Memory read failed', i, error);
+    }
+  }
+
+  document.getElementById('memoryPhotoCount').textContent = count;
+  document.getElementById('memoryChallengeCount').textContent = count;
+
+  if (!count) {
+    gallery.innerHTML = '<div class="memory-empty" style="grid-column:1/-1">עדיין אין תמונות שמורות. צלמו דרך „אתגר היום”.</div>';
+  }
+}
+
+// Emergency
+let lastEmergencyPosition = null;
+
+function openEmergencyMode() {
+  document.getElementById('emergencyModeModal').classList.add('open');
+}
+function closeEmergencyMode() { document.getElementById('emergencyModeModal').classList.remove('open'); }
+function closeEmergencyBackdrop(e) {
+  if (e.target.id === 'emergencyModeModal') closeEmergencyMode();
+}
+
+function showEmergencyLocation() {
+  const box = document.getElementById('emergencyLocation');
+  box.textContent = 'מאתר את המיקום...';
+  requestCurrentPosition(pos => {
+    lastEmergencyPosition = {
+      lat: pos.coords.latitude,
+      lng: pos.coords.longitude,
+      accuracy: Math.round(pos.coords.accuracy || 0)
+    };
+    box.innerHTML =
+      `קו רוחב: <b>${lastEmergencyPosition.lat.toFixed(6)}</b><br>` +
+      `קו אורך: <b>${lastEmergencyPosition.lng.toFixed(6)}</b><br>` +
+      `דיוק משוער: ${lastEmergencyPosition.accuracy} מטר`;
+  }, error => {
+    box.textContent = locationErrorMessage(error);
+  });
+}
+
+async function copyEmergencyLocation() {
+  if (!lastEmergencyPosition) {
+    showEmergencyLocation();
+    alert('לאחר שהמיקום יוצג, לחץ שוב על העתק מיקום.');
+    return;
+  }
+  const value =
+    `${lastEmergencyPosition.lat.toFixed(6)},${lastEmergencyPosition.lng.toFixed(6)}`;
+  try {
+    await navigator.clipboard.writeText(value);
+    alert('המיקום הועתק.');
+  } catch {
+    prompt('העתק את המיקום:', value);
+  }
+}
+
+function openEmergencySearch(term) {
+  window.location.href =
+    'https://www.google.com/maps/search/?api=1&query=' +
+    encodeURIComponent(term + ' near me');
+}
+
+function navigateHotelEmergency() {
+  window.location.href =
+    'https://www.google.com/maps/search/?api=1&query=' +
+    encodeURIComponent('Via del Forte 6, 46040 Ponti sul Mincio MN, Italy');
+}
+
 let activeDay = 0;
 let activeStop = 0;
 let activeChallengeDay = null;
