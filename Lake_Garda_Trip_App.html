@@ -7,9 +7,9 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Garda 2026">
-<meta name="application-name" content="Garda Trip V15">
-<meta name="garda-build" content="V19-20260806">
-<title>טיול בת מצווה – אגם גארדה 2026 · V19</title>
+<meta name="application-name" content="Garda Trip V20">
+<meta name="garda-build" content="V20-20260806-ONEFILE">
+<title>טיול בת מצווה – אגם גארדה 2026 · V20</title>
 <style>
 :root {
   --bg:#07111c; --panel:#102235; --panel2:#152b42; --text:#f7fbff; --muted:#a9bdd0;
@@ -266,11 +266,11 @@ display:grid;grid-template-columns:repeat(4,1fr);gap:3px;will-change:transform}
 }
 </style>
 </head>
-<body data-garda-version="V19" data-garda-build="20260806">
+<body data-garda-version="V20" data-garda-build="20260806-ONEFILE">
 <header class="hero" id="home">
   <div class="kicker">משפחת כהן · טיול בת מצווה</div>
   <h1>אגם גארדה וונציה 2026</h1>
-  <p>גרסה 19 · בוקר חכם, מצב נהיגה, אוכל, זיכרונות, חירום ואופליין</p>
+  <p>גרסה 20 · קובץ אחד, בוקר חכם, מצב נהיגה, אוכל, זיכרונות וחירום</p>
   <div class="hero-grid">
     <div class="stat"><b>7 ימים</b><span>פארקים, טבע, ערים ואגם</span></div>
     <div class="stat"><b>בסיס הטיול</b><span>Bio Agriturismo Vojon</span></div>
@@ -1924,6 +1924,12 @@ renderExpenses();
     console.warn('Location is unavailable because this page is not running over HTTPS.');
   }
 })();
+</script>
+
+
+<script>
+/* V20 One-File Edition: all app interface and logic are contained in this HTML file. */
+window.GARDA_ONE_FILE_VERSION = 'V20';
 </script>
 
 </body>
