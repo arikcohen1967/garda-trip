@@ -7,9 +7,9 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Garda 2026">
-<meta name="application-name" content="Garda Trip V29 Apple Clean Light">
-<meta name="garda-build" content="V29-APPLE-CLEAN-LIGHT-20260808">
-<title>טיול בת מצווה – אגם גארדה 2026 · V29 Apple Clean Light</title>
+<meta name="application-name" content="Garda Trip V30 Apple Clean Pro">
+<meta name="garda-build" content="V30-APPLE-CLEAN-PRO-20260808">
+<title>טיול בת מצווה – אגם גארדה 2026 · V30 Apple Clean Pro</title>
 <style>
 :root {
   --bg:#07111c; --panel:#102235; --panel2:#152b42; --text:#f7fbff; --muted:#a9bdd0;
@@ -794,13 +794,65 @@ button,.btn,.start-day{
   }
 }
 
+
+/* V30 — Apple Clean Pro: visual polish only */
+.hero{padding-bottom:20px!important}
+.hero h1{max-width:620px;letter-spacing:-.035em!important}
+.hero-grid{gap:12px!important}
+.stat{border-radius:16px!important}
+
+.wrap{padding:14px 14px 110px!important}
+.morning-card{
+  border-radius:22px!important;
+  box-shadow:0 10px 30px rgba(0,0,0,.07)!important;
+}
+.morning-actions{gap:10px!important}
+.morning-actions button,.morning-actions a{
+  min-height:48px;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:14px!important;
+}
+
+.quick{
+  gap:10px!important;
+  margin:2px 0 18px!important;
+}
+.quick a,.quick button{
+  min-height:52px;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:16px!important;
+  font-size:14px!important;
+}
+
+.hotel-card,.day-card,.panel{
+  border-radius:22px!important;
+}
+.day-head{gap:12px}
+.day-head h2{letter-spacing:-.02em}
+.stop{border-radius:18px!important}
+.actions .btn{min-height:46px;display:flex;align-items:center;justify-content:center}
+
+.bottom-nav{
+  left:10px!important;right:10px!important;bottom:8px!important;
+  border-radius:20px!important;
+  overflow:hidden;
+}
+.bottom-nav a{padding:7px 4px!important}
+
+@media(max-width:430px){
+  .hero{padding-inline:14px!important}
+  .wrap{padding-inline:12px!important}
+  .morning-card{padding:16px!important}
+  .hero h1{font-size:28px!important}
+}
+
 </style>
 </head>
 <body data-garda-version="V22" data-garda-build="20260808-black-glass">
 <header class="hero" id="home">
   <div class="kicker">משפחת כהן · טיול בת מצווה</div>
   <h1>אגם גארדה וונציה 2026</h1>
-  <p>גרסה 29 · Apple Clean Light · בוקר חכם, מצב נהיגה, אוכל, זיכרונות, חירום ואופליין</p>
+  <p>גרסה 30 · Apple Clean Pro · בוקר חכם, מצב נהיגה, אוכל, זיכרונות, חירום ואופליין</p>
   <div class="hero-grid">
     <div class="stat"><b>7 ימים</b><span>פארקים, טבע, ערים ואגם</span></div>
     <div class="stat"><b>בסיס הטיול</b><span>Bio Agriturismo Vojon</span></div>
@@ -855,14 +907,7 @@ button,.btn,.start-day{
     </div>
   </section>
 
-  <div class="feature-row" aria-label="כלים חכמים">
-    <button type="button" onclick="openDriveMode()">🚗 מצב נהיגה</button>
-    <button type="button" onclick="openFoodMode()">🍕 מה נאכל היום?</button>
-    <button type="button" onclick="openMemoriesMode()">📸 זיכרונות חכמים</button>
-    <button type="button" onclick="openEmergencyMode()">🚨 מצב חירום</button>
-  </div>
-
-  <div class="quick" id="quickActions">
+<div class="quick" id="quickActions">
     <button id="quickToday" type="button">✨ היום שלי</button>
     <a id="quickRoute" href="#days">📅 כל המסלול</a>
     <button id="quickSaveParking" type="button">📍 שמור חניה</button>
