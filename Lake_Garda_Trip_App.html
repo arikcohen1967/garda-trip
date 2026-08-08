@@ -7,9 +7,9 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Garda 2026">
-<meta name="application-name" content="Garda Trip V30 Apple Clean Pro">
-<meta name="garda-build" content="V30-APPLE-CLEAN-PRO-20260808">
-<title>טיול בת מצווה – אגם גארדה 2026 · V30 Apple Clean Pro</title>
+<meta name="application-name" content="Garda Trip V32 Smart Trip Fixed">
+<meta name="garda-build" content="V32-SMART-TRIP-FIXED-20260808">
+<title>טיול בת מצווה – אגם גארדה 2026 · V32 Smart Trip Fixed</title>
 <style>
 :root {
   --bg:#07111c; --panel:#102235; --panel2:#152b42; --text:#f7fbff; --muted:#a9bdd0;
@@ -846,13 +846,85 @@ button,.btn,.start-day{
   .hero h1{font-size:28px!important}
 }
 
+
+/* ===== V31 SMART TRIP ===== */
+.v31-smart-panel{margin-top:14px!important}
+.v31-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
+.v31-head small{font-size:11px;font-weight:900;letter-spacing:.08em;color:#6e6e73}
+.v31-head h2{margin:3px 0 0!important}
+.v31-head>span{background:#111;color:#fff;border-radius:999px;padding:7px 10px;font-size:11px;font-weight:800}
+.v31-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.v31-grid button{min-height:54px!important;border-radius:16px!important}
+.v31-toggles{margin-top:12px;border-top:1px solid rgba(0,0,0,.08)}
+.v31-toggles label{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 2px;border-bottom:1px solid rgba(0,0,0,.07);font-size:13px;font-weight:700}
+.v31-toggles label:last-child{border-bottom:0}
+.v31-toggles input{width:22px;height:22px;accent-color:#111}
+.v31-sheet{background:#fff!important;color:#111!important}
+.v31-sheet h2,.v31-sheet h3,.v31-sheet p,.v31-sheet div{color:#111}
+.v31-choice{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
+.v31-choice button{min-height:50px!important}
+.v31-result{padding:15px;border-radius:18px;background:#f4f4f6;border:1px solid rgba(0,0,0,.08);line-height:1.55}
+.v31-big-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.v31-big-actions a,.v31-big-actions button{min-height:58px;display:flex;align-items:center;justify-content:center;text-align:center;border-radius:16px;font-weight:800}
+.v31-drive-dest{font-size:24px;font-weight:900;margin:12px 0}
+@media(max-width:430px){.v31-grid{grid-template-columns:1fr 1fr}.v31-choice{grid-template-columns:1fr 1fr 1fr}}
+
+
+/* ===== V32 FIXES ===== */
+/* Preserve the previous clean font */
+html,body,button,input,select,textarea,a{
+  font-family:Arial,"Helvetica Neue",Helvetica,sans-serif!important;
+}
+
+/* V31 modal must always sit above the bottom navigation */
+#v31Modal{
+  z-index:2500!important;
+  align-items:flex-end!important;
+}
+#v31Modal .v31-sheet{
+  max-height:calc(100dvh - 16px)!important;
+  overflow-y:auto!important;
+  overscroll-behavior:contain;
+  padding-bottom:calc(34px + env(safe-area-inset-bottom))!important;
+  border-radius:26px 26px 0 0!important;
+}
+
+/* Hide bottom navigation only while a Smart Trip window is open */
+body.v31-modal-open .bottom-nav{
+  opacity:0!important;
+  pointer-events:none!important;
+  transform:translateY(120%)!important;
+}
+
+/* Better spacing in Smart Trip windows */
+.v31-result{margin-top:8px}
+.v31-big-actions{padding-bottom:6px}
+.v31-big-actions a,.v31-big-actions button{
+  min-height:56px!important;
+  line-height:1.25;
+}
+
+/* Cleaner driving mode */
+.v31-drive-dest{
+  font-size:26px!important;
+  line-height:1.2;
+  letter-spacing:-.02em;
+}
+@media(max-width:430px){
+  #v31Modal .v31-sheet{
+    max-height:calc(100dvh - 8px)!important;
+    padding-inline:14px!important;
+  }
+  .v31-big-actions{grid-template-columns:1fr 1fr}
+}
+
 </style>
 </head>
 <body data-garda-version="V22" data-garda-build="20260808-black-glass">
 <header class="hero" id="home">
   <div class="kicker">משפחת כהן · טיול בת מצווה</div>
   <h1>אגם גארדה וונציה 2026</h1>
-  <p>גרסה 30 · Apple Clean Pro · בוקר חכם, מצב נהיגה, אוכל, זיכרונות, חירום ואופליין</p>
+  <p>גרסה 32 · Smart Trip Fixed · בוקר חכם, מצב נהיגה, אוכל, זיכרונות, חירום ואופליין</p>
   <div class="hero-grid">
     <div class="stat"><b>7 ימים</b><span>פארקים, טבע, ערים ואגם</span></div>
     <div class="stat"><b>בסיס הטיול</b><span>Bio Agriturismo Vojon</span></div>
@@ -904,6 +976,28 @@ button,.btn,.start-day{
       <button type="button" onclick="openMorningMemories()">📸 הזיכרונות</button>
       <button type="button" onclick="openFoodToday()">🍕 מה נאכל היום?</button>
       <a href="#emergency">🚨 מצב חירום</a>
+    </div>
+  </section>
+
+  <section class="panel v31-smart-panel" id="smartTripTools">
+    <div class="v31-head">
+      <div>
+        <small>✨ SMART TRIP</small>
+        <h2>העוזר החכם שלנו</h2>
+      </div>
+      <span>V32</span>
+    </div>
+
+    <div class="v31-grid">
+      <button type="button" onclick="openFreeTime()">🕐 יש לנו שעה פנויה</button>
+      <button type="button" onclick="showDailySurprise()">🎁 הפתעה של היום</button>
+      <button type="button" onclick="openEveningMode()">🌙 מצב ערב</button>
+      <button type="button" onclick="openDriveModeV31()">🚗 מצב נהיגה</button>
+    </div>
+
+    <div class="v31-toggles">
+      <label><span>🌙 מצב ערב אוטומטי</span><input id="eveningAutoToggle" type="checkbox" onchange="saveV31Settings()"></label>
+      <label><span>🚗 הצעת מצב נהיגה</span><input id="driveSuggestToggle" type="checkbox" onchange="saveV31Settings()"></label>
     </div>
   </section>
 
@@ -1121,6 +1215,17 @@ button,.btn,.start-day{
        accept="image/*"
        capture="environment"
        hidden>
+
+
+<div class="modal" id="v31Modal" onclick="if(event.target===this)closeV31Modal()">
+  <div class="sheet v31-sheet">
+    <div class="sheet-head">
+      <h2 id="v31ModalTitle">Smart Trip</h2>
+      <button class="close" type="button" onclick="closeV31Modal()">סגור</button>
+    </div>
+    <div id="v31ModalBody"></div>
+  </div>
+</div>
 
 <script>
 const tripDays = [{"date":"2026-09-30","label":"רביעי · 30.09.2026","title":"נחיתה והגעה למלון","icon":"✈️","challenge":"לצלם את התמונה המשפחתית הראשונה באיטליה.","stops":[{"time":"16:00","name":"נחיתה בנמל התעופה ורונה","dest":"Verona Villafranca Airport","note":"איסוף מזוודות ורכב שכור."},{"time":"18:00","name":"נסיעה למלון","dest":"Bio Agriturismo Vojon, Ponti sul Mincio, Italy","note":"צ׳ק-אין, התארגנות וארוחת ערב רגועה באזור."}]},{"date":"2026-10-01","label":"חמישי · 01.10.2026","title":"Gardaland – יום פארק מלא","icon":"🎢","challenge":"לבחור יחד את שלושת המתקנים הכי טובים של היום.","stops":[{"time":"08:30","name":"יציאה מהמלון ל-Gardaland","dest":"Gardaland Resort, Via Derna 4, Castelnuovo del Garda","note":"לצאת מוקדם ולהגיע בנחת לפני הכניסה."},{"time":"09:00","name":"חניה וכניסה ל-Gardaland","dest":"Gardaland Parking, Castelnuovo del Garda","note":"לשמור באפליקציה את מיקום הרכב ולצלם את אזור החניה."},{"time":"בוקר","name":"מתקני הדגל – סבב ראשון","dest":"Gardaland Resort","note":"להתחיל במתקנים המבוקשים ביותר לפני שהתורים מתארכים."},{"time":"13:00","name":"ארוחת צהריים והפסקה","dest":"Gardaland Resort","note":"הפסקה קצרה, מים וטעינת טלפונים אם צריך."},{"time":"אחה״צ","name":"המשך Gardaland","dest":"Gardaland Resort","note":"מופעים, מתקנים נוספים וחזרה למועדפים לפי התורים."},{"time":"ערב","name":"חזרה למלון","dest":"Bio Agriturismo Vojon, Ponti sul Mincio, Italy","note":"ניווט ישיר למלון ומנוחה."}]},{"date":"2026-10-02","label":"שישי · 02.10.2026","title":"סובב אגם גארדה + ראפטינג","icon":"🚣","challenge":"לצלם תמונה משפחתית אחת עם האגם ואחת מהראפטינג.","stops":[{"time":"08:00","name":"יציאה צפונה לאורך החוף המזרחי","dest":"Malcesine, Italy","note":"נסיעה נופית לאורך האגם. עצירת קפה קצרה אם מתחשק."},{"time":"09:15","name":"מלצ׳סינה – טיילת והעיר העתיקה","dest":"Malcesine Centro, Italy","note":"טיול קצר בעיר העתיקה ובטיילת; לא עולים היום למונטה באלדו כדי לשמור זמן לראפטינג."},{"time":"10:30","name":"המשך צפונה לריבה דל גארדה","dest":"Riva del Garda, Italy","note":"עצירה על שפת האגם, תמונות וסיבוב קצר במרכז."},{"time":"12:00","name":"נסיעה דרך החוף המערבי","dest":"Limone sul Garda, Italy","note":"עוברים לצד המערבי ועוצרים בלימונה לארוחת צהריים קלה."},{"time":"14:30","name":"יציאה לראפטינג ב-Valdadige","dest":"Visit Valdadige, Via San Martino, Volargne, Italy","note":"ראפטינג משפחתי על נהר האדיג׳ה. הפעילות מפורסמת כזמינה מרץ–נובמבר; יש להזמין מראש ולאשר שעה ל-2/10."},{"time":"לפי ההזמנה","name":"ראפטינג – קניון Ceraino","dest":"Visit Valdadige, Volargne, Italy","note":"כ-10 ק״מ על הנהר עם מדריך. להביא בגדים ונעליים להחלפה ומגבות."},{"time":"ערב","name":"חזרה למלון","dest":"Bio Agriturismo Vojon, Ponti sul Mincio, Italy","note":"מקלחת, ארוחת ערב ומנוחה."}]},{"date":"2026-10-03","label":"שבת · 03.10.2026","title":"Movieland + Medieval Times","icon":"🎬","challenge":"לצלם סלפי משפחתי שנראה כמו פוסטר של סרט.","stops":[{"time":"בוקר","name":"יציאה ל-Movieland","dest":"Movieland The Hollywood Park, Via Fossalta 58, Lazise","note":"להגיע לקראת הפתיחה ולהתחיל במתקנים המרכזיים."},{"time":"בוקר–אחה״צ","name":"Movieland – יום סרטים ואקשן","dest":"Movieland The Hollywood Park, Via Fossalta 58, Lazise","note":"לשלב מתקנים ומופעים ולהשאיר זמן למנוחה לפני האבירים."},{"time":"אחה״צ","name":"הפסקה והתארגנות למופע","dest":"Medieval Times, Via Fossalta 58, Lazise","note":"הפארק והמופע באותו מתחם; לבדוק באותו יום את שעת הכניסה המדויקת."},{"time":"לפי הכרטיס","name":"Medieval Times – מופע האבירים","dest":"Medieval Times, Via Fossalta 58, Lazise","note":"מופע ערב וארוחה. לשמור את הכרטיסים גם כצילום מסך."},{"time":"ערב","name":"חזרה למלון","dest":"Bio Agriturismo Vojon, Ponti sul Mincio, Italy","note":"חזרה ישירה אחרי המופע."}]},{"date":"2026-10-04","label":"ראשון · 04.10.2026","title":"ונציה – יום מלא","icon":"🛶","challenge":"למצוא גשר קטן ויפה מחוץ למסלול הראשי ולצלם עליו תמונה משפחתית.","stops":[{"time":"07:30","name":"יציאה מוקדמת מהמלון לוונציה","dest":"Venezia Tronchetto Parking, Isola Nova del Tronchetto, Venezia","note":"יום ארוך – עדיף לצאת מוקדם. לשמור צילום של מיקום הרכב והקומה."},{"time":"09:30","name":"Tronchetto – חניה ומעבר למרכז","dest":"Venezia Tronchetto Parking","note":"משם Vaporetto/People Mover לכיוון המרכז. אין כניסה עם הרכב לעיר עצמה."},{"time":"10:15","name":"כיכר סן מרקו","dest":"Piazza San Marco, Venezia","note":"כיכר סן מרקו, הבזיליקה מבחוץ/מבפנים לפי התור, ארמון הדוג׳ה וגשר האנחות."},{"time":"12:30","name":"ארוחת צהריים וסמטאות ונציה","dest":"Campo Santa Maria Formosa, Venezia","note":"להתרחק מעט מסן מרקו, לאכול וליהנות מהסמטאות והכיכרות הקטנות."},{"time":"14:00","name":"גשר ריאלטו והשוק","dest":"Ponte di Rialto, Venezia","note":"הליכה לריאלטו, תצפית על התעלה הגדולה וזמן לגלידה וקניות קטנות."},{"time":"15:30","name":"שיט Vaporetto על התעלה הגדולה","dest":"Rialto, Venezia","note":"לשלב שיט כחלק מהחוויה ולא רק כאמצעי תחבורה."},{"time":"17:00","name":"זמן חופשי בוונציה","dest":"Dorsoduro, Venezia","note":"שיטוט רגוע באזור פחות עמוס; אפשר לוותר אם עייפים."},{"time":"18:30","name":"חזרה ל-Tronchetto","dest":"Venezia Tronchetto Parking","note":"לחזור לרכב לפני שמחשיך מדי ולבדוק שכולם זוכרים איפה חנינו."},{"time":"19:00","name":"נסיעה למלון","dest":"Bio Agriturismo Vojon, Ponti sul Mincio, Italy","note":"חזרה למלון וארוחת ערב."}]},{"date":"2026-10-05","label":"שני · 05.10.2026","title":"Borghetto sul Mincio + Valeggio","icon":"🏘️","challenge":"למצוא את הפינה הכי יפה בין טחנות המים ולצלם תמונת בת מצווה מיוחדת.","stops":[{"time":"09:30","name":"יציאה ל-Borghetto sul Mincio","dest":"Borghetto sul Mincio, Valeggio sul Mincio, Italy","note":"יום רגוע וקרוב יחסית למלון."},{"time":"10:00","name":"Borghetto – הכפר והטחנות","dest":"Borghetto sul Mincio, Italy","note":"טיול רגלי בין הנהר, הגשרים וטחנות המים של הכפר."},{"time":"11:30","name":"Ponte Visconteo ותצפיות","dest":"Ponte Visconteo, Valeggio sul Mincio, Italy","note":"נקודת צילום נהדרת של הכפר והנהר."},{"time":"12:30","name":"ארוחת צהריים – Tortellini di Valeggio","dest":"Valeggio sul Mincio, Italy","note":"לטעום את הטורטליני המקומיים המכונים Nodo d’Amore – קשר האהבה."},{"time":"14:00","name":"Parco Giardino Sigurtà","dest":"Parco Giardino Sigurtà, Valeggio sul Mincio, Italy","note":"אם פתוח ומזג האוויר נעים – כמה שעות של גנים, מרחבים ותמונות. אם לא, ממשיכים למרכז Valeggio."},{"time":"17:00","name":"Valeggio sul Mincio","dest":"Valeggio sul Mincio Centro, Italy","note":"קפה/גלידה וסיבוב קצר לפני החזרה."},{"time":"18:00","name":"חזרה למלון","dest":"Bio Agriturismo Vojon, Ponti sul Mincio, Italy","note":"ערב רגוע ואריזת מזוודות לקראת הטיסה."}]},{"date":"2026-10-06","label":"שלישי · 06.10.2026","title":"ורונה + הטיסה הביתה","icon":"❤️","challenge":"לבחור יחד את רגע השיא של כל הטיול.","stops":[{"time":"09:00","name":"צ׳ק-אאוט ויציאה לוורונה","dest":"Parcheggio Cittadella, Piazza Cittadella, Verona","note":"המזוודות נשארות ברכב – לא להשאיר חפצים גלויים."},{"time":"10:00","name":"Piazza Bra וה-Arena","dest":"Arena di Verona, Piazza Bra, Verona","note":"פתיחה קלאסית של ורונה: הכיכר והאמפיתיאטרון הרומי."},{"time":"11:00","name":"Via Mazzini","dest":"Via Giuseppe Mazzini, Verona","note":"מדרחוב יפה בדרך אל לב העיר."},{"time":"11:30","name":"הבית והמרפסת של יוליה","dest":"Casa di Giulietta, Via Cappello 23, Verona","note":"החצר והמרפסת המפורסמת של יוליה. אם רוצים להיכנס לבית – לבדוק כרטיסים מראש."},{"time":"12:15","name":"Piazza delle Erbe","dest":"Piazza delle Erbe, Verona","note":"אחת הכיכרות היפות בעיר; זמן לקפה, תמונות ושוק."},{"time":"13:00","name":"ארוחת צהריים במרכז ורונה","dest":"Piazza dei Signori, Verona","note":"ארוחה אחרונה באיטליה בלי להתרחק מדי מהחניה."},{"time":"15:00","name":"חזרה לרכב","dest":"Parcheggio Cittadella, Piazza Cittadella, Verona","note":"להתאים את השעה בפועל לשעת הטיסה ולתנאי החזרת הרכב."},{"time":"18:30","name":"החזרת הרכב בשדה התעופה","dest":"Verona Villafranca Airport","note":"להשאיר זמן לתדלוק, החזרת הרכב, בידוק וביטחון."}]}];
@@ -2044,6 +2149,150 @@ renderExpenses();
     console.warn('Location is unavailable because this page is not running over HTTPS.');
   }
 })();
+</script>
+
+
+<script>
+/* ===== V31 SMART TRIP ===== */
+const V31_SETTINGS_KEY = "garda_v31_settings";
+const V31_HOTEL_WAZE = "https://www.waze.com/ul?q=Bio%20Agriturismo%20Vojon%2C%20Ponti%20sul%20Mincio%2C%20Italy&navigate=yes";
+
+function getV31Settings(){
+  try{return Object.assign({eveningAuto:true,driveSuggest:true},JSON.parse(localStorage.getItem(V31_SETTINGS_KEY)||"{}"))}
+  catch(e){return {eveningAuto:true,driveSuggest:true}}
+}
+function saveV31Settings(){
+  const s={
+    eveningAuto:!!document.getElementById("eveningAutoToggle")?.checked,
+    driveSuggest:!!document.getElementById("driveSuggestToggle")?.checked
+  };
+  localStorage.setItem(V31_SETTINGS_KEY,JSON.stringify(s));
+}
+function initV31(){
+  const s=getV31Settings();
+  const e=document.getElementById("eveningAutoToggle"), d=document.getElementById("driveSuggestToggle");
+  if(e)e.checked=s.eveningAuto;
+  if(d)d.checked=s.driveSuggest;
+  enhanceMorningV31();
+  if(s.eveningAuto && new Date().getHours()>=18) setTimeout(()=>showEveningHint(),900);
+}
+function v31Open(title,html){
+  document.getElementById("v31ModalTitle").textContent=title;
+  document.getElementById("v31ModalBody").innerHTML=html;
+  document.getElementById("v31Modal").classList.add("open");
+  document.body.classList.add("v31-modal-open");
+}
+function closeV31Modal(){document.getElementById("v31Modal").classList.remove("open");document.body.classList.remove("v31-modal-open")}
+function tripDayIndex(){
+  const now=new Date(), iso=now.toISOString().slice(0,10);
+  const cards=[...document.querySelectorAll(".day-card")];
+  let i=cards.findIndex(c=>c.dataset.date===iso);
+  return i>=0?i:0;
+}
+function activeDayCard(){return document.querySelectorAll(".day-card")[tripDayIndex()] || document.querySelector(".day-card")}
+function firstPendingStop(){
+  const card=activeDayCard();
+  if(!card)return null;
+  return [...card.querySelectorAll(".stop")].find(s=>!s.querySelector('input[type="checkbox"]')?.checked) || card.querySelector(".stop");
+}
+function stopInfo(stop){
+  if(!stop)return {name:"המלון",waze:V31_HOTEL_WAZE,maps:"#"};
+  return {
+    name:stop.querySelector("h3")?.textContent?.trim()||"היעד הבא",
+    waze:stop.querySelector("a.waze")?.href||V31_HOTEL_WAZE,
+    maps:stop.querySelector("a.maps")?.href||"#"
+  };
+}
+function openFreeTime(){
+  v31Open("🕐 יש לנו זמן פנוי",`
+    <p>כמה זמן באמת יש לנו? האפליקציה תציע משהו קליל שלא הורס את התוכנית.</p>
+    <div class="v31-choice">
+      <button onclick="freeTimePick(30)">30 דקות</button>
+      <button onclick="freeTimePick(60)">שעה</button>
+      <button onclick="freeTimePick(120)">שעתיים</button>
+    </div><div id="freeTimeResult"></div>`);
+}
+function freeTimePick(mins){
+  const ideas = mins<=30
+    ? ["☕ קפה או גלידה קרובים","📸 נקודת צילום יפה","🛍️ סיבוב קצר במרכז הקרוב"]
+    : mins<=60
+    ? ["🍦 גלידה + טיילת","🏘️ סיבוב בעיר העתיקה הקרובה","🌅 תצפית או חוף קרוב"]
+    : ["🏘️ עיירה יפה בסביבה","🌊 טיול רגוע לאורך האגם","🛍️ קניות + ארוחה קלה"];
+  const q = mins<=30 ? "gelato" : mins<=60 ? "attractions" : "things to do";
+  document.getElementById("freeTimeResult").innerHTML=`
+    <div class="v31-result"><b>הבחירה שלי:</b><br>${ideas.join("<br>")}</div>
+    <div class="v31-big-actions">
+      <button onclick="window.open('https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}','_blank')">📍 מצא קרוב אליי</button>
+      <button onclick="closeV31Modal()">חזרה לטיול</button>
+    </div>`;
+}
+const V31_SURPRISES=[
+ "🍦 כל אחת בוחרת טעם גלידה שמעולם לא ניסתה.",
+ "📸 מצאו נקודת צילום משפחתית שלא תכננתם מראש.",
+ "☕ עצרו לקפה איטלקי וקינוח במקום קטן בדרך.",
+ "🌅 מצאו מקום יפה לשקיעה וצילום משפחתי.",
+ "🛍️ לכל אחת תקציב קטן למזכרת מצחיקה מהיום.",
+ "🇮🇹 למדו יחד שלוש מילים חדשות באיטלקית והשתמשו בהן.",
+ "🎵 כל אחת בוחרת שיר אחד לפסקול הנסיעה."
+];
+function showDailySurprise(){
+  const d=activeDayCard()?.dataset.date||new Date().toDateString();
+  let n=0; for(const ch of d)n=(n+ch.charCodeAt(0))%V31_SURPRISES.length;
+  v31Open("🎁 הפתעה של היום",`<div class="v31-result"><b>${V31_SURPRISES[n]}</b><br><br>זו רק הצעה — אפשר להתעלם ממנה בלי לשנות את המסלול.</div>`);
+}
+function openEveningMode(){
+  const next=firstPendingStop(), info=stopInfo(next);
+  const tomorrow=document.querySelectorAll(".day-card")[Math.min(tripDayIndex()+1,document.querySelectorAll(".day-card").length-1)];
+  const tomorrowTitle=tomorrow?.querySelector("h2")?.textContent||"יום הטיול הבא";
+  v31Open("🌙 מצב ערב",`
+    <div class="v31-result">
+      <b>סוגרים את היום בנחת.</b><br>הנה הסיכום הקצר לערב:<br>
+      היעד הבא בתוכנית: ${info.name}<br>
+      מחר: <b>${tomorrowTitle}</b>
+    </div>
+    <div class="v31-big-actions">
+      <a href="${V31_HOTEL_WAZE}">🏡 Waze למלון</a>
+      <button onclick="openFoodToday()">🍕 מה נאכל?</button>
+      <button onclick="openMorningMemories()">📸 הזיכרונות</button>
+      <button onclick="closeV31Modal()">סגור מצב ערב</button>
+    </div>`);
+}
+function showEveningHint(){
+  const card=document.getElementById("morningDashboard");
+  if(card && !document.getElementById("v31EveningHint")){
+    const b=document.createElement("button");
+    b.id="v31EveningHint"; b.type="button"; b.textContent="🌙 הערב הגיע — פתח מצב ערב";
+    b.style.cssText="width:100%;margin-top:10px";
+    b.onclick=openEveningMode; card.appendChild(b);
+  }
+}
+function openDriveModeV31(){
+  const info=stopInfo(firstPendingStop());
+  v31Open("🚗 מצב נהיגה",`
+    <div class="v31-result">
+      <small>היעד הבא</small>
+      <div class="v31-drive-dest">${info.name}</div>
+      ממשק נהיגה נקי: יעד הבא, מלון, חניה וחירום בלבד.
+    </div>
+    <div class="v31-big-actions">
+      <a href="${info.waze}">🚗 Waze ליעד הבא</a>
+      <a href="${V31_HOTEL_WAZE}">🏡 למלון</a>
+      <button onclick="document.getElementById('quickOpenParking')?.click();closeV31Modal()">📍 איפה חנינו?</button>
+      <a href="#emergency" onclick="closeV31Modal()">🚨 חירום</a>
+    </div>`);
+}
+function enhanceMorningV31(){
+  const note=document.getElementById("morningNote");
+  const dest=stopInfo(firstPendingStop());
+  if(note && !note.dataset.v31){
+    note.dataset.v31="1";
+    const extra=document.createElement("div");
+    extra.style.cssText="margin-top:8px;font-weight:700";
+    extra.textContent="✨ Smart Trip: היעד הבא כרגע — "+dest.name;
+    note.appendChild(extra);
+  }
+}
+document.addEventListener("DOMContentLoaded",initV31);
 </script>
 
 </body>
