@@ -7,9 +7,9 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Garda 2026">
-<meta name="application-name" content="Garda Trip V32 Smart Trip Fixed">
-<meta name="garda-build" content="V32-SMART-TRIP-FIXED-20260808">
-<title>טיול בת מצווה – אגם גארדה 2026 · V32 Smart Trip Fixed</title>
+<meta name="application-name" content="Garda Trip V33 Drive Mode Fix">
+<meta name="garda-build" content="V33-DRIVE-MODE-FIX-20260808">
+<title>טיול בת מצווה – אגם גארדה 2026 · V33 Drive Mode Fix</title>
 <style>
 :root {
   --bg:#07111c; --panel:#102235; --panel2:#152b42; --text:#f7fbff; --muted:#a9bdd0;
@@ -924,7 +924,7 @@ body.v31-modal-open .bottom-nav{
 <header class="hero" id="home">
   <div class="kicker">משפחת כהן · טיול בת מצווה</div>
   <h1>אגם גארדה וונציה 2026</h1>
-  <p>גרסה 32 · Smart Trip Fixed · בוקר חכם, מצב נהיגה, אוכל, זיכרונות, חירום ואופליין</p>
+  <p>גרסה 33 · Drive Mode Fix · בוקר חכם, מצב נהיגה, אוכל, זיכרונות, חירום ואופליין</p>
   <div class="hero-grid">
     <div class="stat"><b>7 ימים</b><span>פארקים, טבע, ערים ואגם</span></div>
     <div class="stat"><b>בסיס הטיול</b><span>Bio Agriturismo Vojon</span></div>
@@ -985,7 +985,7 @@ body.v31-modal-open .bottom-nav{
         <small>✨ SMART TRIP</small>
         <h2>העוזר החכם שלנו</h2>
       </div>
-      <span>V32</span>
+      <span>V33</span>
     </div>
 
     <div class="v31-grid">
@@ -2267,7 +2267,17 @@ function showEveningHint(){
   }
 }
 function openDriveModeV31(){
-  const info=stopInfo(firstPendingStop());
+  let driveStop=firstPendingStop();
+
+  /* ביום הנחיתה מצב הנהיגה מתחיל לאחר איסוף הרכב:
+     מדלגים על תחנת "נחיתה בנמל התעופה" ומנווטים למלון. */
+  if(tripDayIndex()===0){
+    const arrivalDay=activeDayCard();
+    const hotelStop=arrivalDay?.querySelector('.stop[data-stop="1"]');
+    if(hotelStop) driveStop=hotelStop;
+  }
+
+  const info=stopInfo(driveStop);
   v31Open("🚗 מצב נהיגה",`
     <div class="v31-result">
       <small>היעד הבא</small>
