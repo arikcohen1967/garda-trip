@@ -7,9 +7,9 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Garda 2026">
-<meta name="application-name" content="Garda Trip V22 Black Glass">
-<meta name="garda-build" content="V22-BLACK-GLASS-20260808">
-<title>טיול בת מצווה – אגם גארדה 2026 · V22 Black Glass</title>
+<meta name="application-name" content="Garda Trip V29 Apple Clean Light">
+<meta name="garda-build" content="V29-APPLE-CLEAN-LIGHT-20260808">
+<title>טיול בת מצווה – אגם גארדה 2026 · V29 Apple Clean Light</title>
 <style>
 :root {
   --bg:#07111c; --panel:#102235; --panel2:#152b42; --text:#f7fbff; --muted:#a9bdd0;
@@ -699,13 +699,108 @@ button:active,.btn:active,.start-day:active{
   }
 }
 
+
+/* V29 — Full Apple Clean Light cleanup */
+:root{
+  --bg:#f5f5f7 !important;
+  --panel:#ffffff !important;
+  --panel2:#f2f2f4 !important;
+  --text:#111111 !important;
+  --muted:#6e6e73 !important;
+  --line:rgba(0,0,0,.10) !important;
+}
+
+html,body{
+  background:linear-gradient(180deg,#ffffff 0%,#f4f4f6 100%) !important;
+  color:#111111 !important;
+}
+
+/* Remove remaining dark header / hero styling */
+.hero,
+header,
+.topbar,
+.app-header,
+.hero-section{
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.96),rgba(246,246,248,.90)) !important;
+  color:#111111 !important;
+  border-bottom:1px solid rgba(0,0,0,.08) !important;
+  box-shadow:none !important;
+}
+
+.hero h1,
+.hero h2,
+.hero h3,
+.hero p,
+.hero .kicker,
+.hero .stat,
+.hero .stat b,
+.hero .stat span,
+header h1,
+header h2,
+header h3,
+header p{
+  color:#111111 !important;
+}
+
+.hero .stat,
+.hero-grid .stat,
+.stat{
+  background:rgba(255,255,255,.82) !important;
+  border:1px solid rgba(0,0,0,.08) !important;
+  box-shadow:0 8px 22px rgba(0,0,0,.06) !important;
+}
+
+/* Ensure all cards remain light and readable */
+.day-card,.card,.panel,.morning-card,.hero-card,.sheet,.modal-content,
+.stop,.hotel-card,.budget-card,.emergency-card{
+  background:linear-gradient(145deg,rgba(255,255,255,.94),rgba(248,248,250,.82)) !important;
+  color:#111111 !important;
+  border:1px solid rgba(0,0,0,.08) !important;
+  box-shadow:0 12px 28px rgba(0,0,0,.08) !important;
+}
+
+.day-card *, .card *, .panel *, .morning-card *, .hero-card *,
+.stop *, .hotel-card *, .budget-card *, .emergency-card *{
+  color:inherit;
+}
+
+.muted,.subtitle,.meta,.time,.note,.kicker{
+  color:#6e6e73 !important;
+}
+
+/* Keep strong black action buttons */
+button,.btn,.start-day{
+  background:#111111 !important;
+  color:#ffffff !important;
+  border-color:#111111 !important;
+}
+
+/* Keep the floating bottom navigation black */
+.bottom-nav,.nav-bar,.floating-menu{
+  background:rgba(17,17,17,.96) !important;
+  color:#ffffff !important;
+}
+
+/* Update visible version wording without touching logic */
+.version-label::after{
+  content:" · Apple Clean Light";
+}
+
+/* Mobile polish */
+@media (max-width:600px){
+  .hero,header,.topbar,.app-header,.hero-section{
+    padding-inline:16px !important;
+  }
+}
+
 </style>
 </head>
 <body data-garda-version="V22" data-garda-build="20260808-black-glass">
 <header class="hero" id="home">
   <div class="kicker">משפחת כהן · טיול בת מצווה</div>
   <h1>אגם גארדה וונציה 2026</h1>
-  <p>גרסה 22 · Black Glass · בוקר חכם, מצב נהיגה, אוכל, זיכרונות, חירום ואופליין</p>
+  <p>גרסה 29 · Apple Clean Light · בוקר חכם, מצב נהיגה, אוכל, זיכרונות, חירום ואופליין</p>
   <div class="hero-grid">
     <div class="stat"><b>7 ימים</b><span>פארקים, טבע, ערים ואגם</span></div>
     <div class="stat"><b>בסיס הטיול</b><span>Bio Agriturismo Vojon</span></div>
