@@ -8,9 +8,9 @@
 <meta content="yes" name="apple-mobile-web-app-capable"/>
 <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
 <meta content="Garda 2026" name="apple-mobile-web-app-title"/>
-<meta content="Garda Trip V46 Notes Same Wallet" name="application-name"/>
-<meta content="V35-LIGHT-DOCK-AROUNDME-FIX-20260808" name="garda-build"/>
-<title>טיול בת מצווה – אגם גארדה 2026 · V34 Smart Route</title>
+<meta content="Garda Trip V52 PDF Top Fix" name="application-name"/>
+<meta content="V47-INLINE-FILE-VIEWER-20260810" name="garda-build"/>
+<title>טיול בת מצווה – אגם גארדה 2026 · V47</title>
 <style>
 :root {
   --bg:#07111c; --panel:#102235; --panel2:#152b42; --text:#f7fbff; --muted:#a9bdd0;
@@ -1184,13 +1184,45 @@ body > nav.bottom-nav a:focus-visible{
 }
 /* ===== END V44 ===== */
 
+
+
+/* ===== V47 — iPhone-safe inline ticket/file viewer ===== */
+.ticket-actions{align-items:center!important;gap:6px!important}
+.ticket-actions .ticket-open-btn{
+  width:auto!important;min-width:64px!important;padding:0 10px!important;
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:5px!important;
+  background:#111!important;color:#fff!important;border-radius:12px!important;font-size:11px!important;
+}
+.ticket-actions .ticket-delete-btn{width:38px!important;background:#f1f1f3!important;color:#222!important;border-color:rgba(0,0,0,.08)!important}
+#ticketViewerModal{z-index:3900!important;align-items:stretch!important;background:rgba(0,0,0,.78)!important}
+#ticketViewerModal.open{display:flex!important}
+.ticket-viewer-sheet{
+  width:100%;height:100dvh;max-height:100dvh;padding:calc(8px + env(safe-area-inset-top)) 0 calc(8px + env(safe-area-inset-bottom));
+  background:#0a0a0b!important;color:#fff!important;display:flex;flex-direction:column;overflow:hidden;
+}
+.ticket-viewer-head{display:grid;grid-template-columns:52px 1fr 52px;align-items:center;gap:8px;padding:6px 12px 12px;border-bottom:1px solid rgba(255,255,255,.12)}
+.ticket-viewer-title{min-width:0;text-align:center;font-weight:800;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#fff!important}
+.ticket-viewer-close,.ticket-viewer-share{width:44px!important;height:44px!important;min-height:44px!important;padding:0!important;border-radius:50%!important;background:#242428!important;color:#fff!important;border:1px solid rgba(255,255,255,.13)!important;box-shadow:none!important;font-size:20px!important}
+.ticket-viewer-body{flex:1;min-height:0;padding:10px;display:flex;align-items:center;justify-content:center;overflow:auto;background:#151517}
+.ticket-viewer-body iframe{width:100%;height:100%;border:0;border-radius:14px;background:#fff}
+.ticket-viewer-body img{display:block;max-width:100%;max-height:100%;object-fit:contain;border-radius:12px;background:#fff}
+.ticket-viewer-fallback{max-width:520px;margin:auto;padding:24px;text-align:center;color:#fff!important;line-height:1.55}
+.ticket-viewer-fallback button{margin-top:12px!important;background:#fff!important;color:#111!important}
+.ticket-viewer-foot{padding:9px 12px 4px;text-align:center;color:#b9b9bf;font-size:11px}
+body.ticket-viewer-open > nav.bottom-nav{opacity:0!important;pointer-events:none!important;transform:translateY(130%)!important}
+@media(min-width:760px){
+  .ticket-viewer-sheet{width:min(900px,94vw);height:min(94dvh,980px);margin:auto;border-radius:24px;padding-top:12px;box-shadow:0 24px 80px rgba(0,0,0,.5)}
+  #ticketViewerModal{align-items:center!important;justify-content:center!important}
+}
+/* ===== END V47 ===== */
+
 </style>
 </head>
 <body data-garda-build="20260808-black-glass" data-garda-version="V22">
 <header class="hero" id="home">
 <div class="kicker">משפחת כהן · טיול בת מצווה</div>
 <h1>אגם גארדה וונציה 2026</h1>
-<p>גרסה 46 · Notes נשמר באותו ארנק כרטיסים · כרטיסי טיסה + כרטיסים לכל פעילות · בוקר חכם, מצב נהיגה, אוכל, זיכרונות, חירום ואופליין</p>
+<p>גרסה 49 · Notes נשמר באותו ארנק כרטיסים · כרטיסי טיסה + כרטיסים לכל פעילות · בוקר חכם, מצב נהיגה, אוכל, זיכרונות, חירום ואופליין</p>
 <div class="hero-grid">
 <div class="stat"><b>7 ימים</b><span>פארקים, טבע, ערים ואגם</span></div>
 <div class="stat"><b>בסיס הטיול</b><span>Bio Agriturismo Vojon</span></div>
@@ -1423,6 +1455,19 @@ body > nav.bottom-nav a:focus-visible{
 <div class="ticket-file-list" id="ticketFileList"></div>
 </div>
 </div>
+
+<div class="modal" id="ticketViewerModal" onclick="closeTicketViewerBackdrop(event)">
+  <div class="ticket-viewer-sheet" role="dialog" aria-modal="true" aria-label="תצוגת קובץ">
+    <div class="ticket-viewer-head">
+      <button class="ticket-viewer-close" onclick="closeTicketViewer()" type="button" aria-label="סגור">✕</button>
+      <div class="ticket-viewer-title" id="ticketViewerTitle">קובץ</div>
+      <button class="ticket-viewer-share" onclick="shareCurrentTicketFile()" type="button" aria-label="שתף">↗</button>
+    </div>
+    <div class="ticket-viewer-body" id="ticketViewerBody"></div>
+    <div class="ticket-viewer-foot" id="ticketViewerMeta"></div>
+  </div>
+</div>
+
 <div class="modal" id="driveModal" onclick="closeDriveBackdrop(event)">
 <div class="sheet">
 <div class="sheet-head">
@@ -2765,5 +2810,1078 @@ function openNotesImport(scope,dayIndex,stopIndex){
   },120);
 }
 </script>
+
+<script>
+/* ===== V47 — reliable inline opener for iPhone/Safari/PWA ===== */
+let ticketViewerObjectUrl=null;
+let ticketViewerRecord=null;
+
+function ticketEscapeHtml(value){
+  return String(value??'').replace(/[&<>'"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));
+}
+
+async function renderTicketFiles(){
+  const title=document.getElementById('ticketCurrentTitle'),list=document.getElementById('ticketFileList');
+  if(!title||!list)return;
+  title.textContent='בתוך '+ticketActiveFolder;
+  list.innerHTML='<div class="ticket-empty">טוען...</div>';
+  const files=await getTicketFiles(ticketActiveFolder);
+  if(!files.length){list.innerHTML='<div class="ticket-empty">עדיין אין כרטיסים בתקייה הזו.</div>';return;}
+  list.innerHTML=files.map(x=>{
+    const isImg=(x.type||'').startsWith('image/');
+    const url=isImg?URL.createObjectURL(x.blob):'';
+    const label=ticketEscapeHtml(x.title||x.name||'קובץ');
+    return `<div class="ticket-file">
+      <div class="ticket-thumb">${isImg?`<img src="${url}" alt="">`:'📄'}</div>
+      <div class="ticket-info"><b>${label}</b><small>${fmtTicketSize(x.size)} · ${new Date(x.created).toLocaleDateString('he-IL')}</small></div>
+      <div class="ticket-actions">
+        <button class="ticket-open-btn" title="פתח קובץ" aria-label="פתח קובץ" onclick="openTicketFile(${x.id})">↗ <span>פתח</span></button>
+        <button class="ticket-delete-btn" title="מחק" aria-label="מחק קובץ" onclick="deleteTicketFile(${x.id})">🗑️</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function openTicketFile(id){
+  try{
+    const x=await getTicketById(id);
+    if(!x||!x.blob)return;
+    closeTicketViewer(false);
+    ticketViewerRecord=x;
+    ticketViewerObjectUrl=URL.createObjectURL(x.blob);
+    const modal=document.getElementById('ticketViewerModal');
+    const body=document.getElementById('ticketViewerBody');
+    const title=document.getElementById('ticketViewerTitle');
+    const meta=document.getElementById('ticketViewerMeta');
+    title.textContent=x.title||x.name||'קובץ';
+    meta.textContent=`${x.type||'קובץ'} · ${fmtTicketSize(x.size||0)}`;
+    body.innerHTML='';
+    const type=(x.type||'').toLowerCase();
+    if(type.startsWith('image/')){
+      const img=document.createElement('img');
+      img.src=ticketViewerObjectUrl;
+      img.alt=x.title||x.name||'תמונה';
+      body.appendChild(img);
+    }else if(type==='application/pdf' || (x.name||'').toLowerCase().endsWith('.pdf')){
+      const frame=document.createElement('iframe');
+      frame.src=ticketViewerObjectUrl;
+      frame.title=x.title||x.name||'PDF';
+      body.appendChild(frame);
+    }else{
+      const box=document.createElement('div');
+      box.className='ticket-viewer-fallback';
+      box.innerHTML='<b>הקובץ נשמר בהצלחה.</b><br>סוג הקובץ הזה לא ניתן להצגה ישירה בתוך האפליקציה.<br><button type="button" onclick="shareCurrentTicketFile()">↗ פתח / שתף באייפון</button>';
+      body.appendChild(box);
+    }
+    modal.classList.add('open');
+    document.body.classList.add('ticket-viewer-open');
+  }catch(err){
+    console.error('V47 open file failed',err);
+    alert('לא הצלחתי לפתוח את הקובץ. נסה שוב או השתמש בכפתור השיתוף.');
+  }
+}
+
+function closeTicketViewer(revoke=true){
+  const modal=document.getElementById('ticketViewerModal');
+  if(modal)modal.classList.remove('open');
+  document.body.classList.remove('ticket-viewer-open');
+  const body=document.getElementById('ticketViewerBody');
+  if(body)body.innerHTML='';
+  if(revoke && ticketViewerObjectUrl){URL.revokeObjectURL(ticketViewerObjectUrl);ticketViewerObjectUrl=null;}
+  if(revoke)ticketViewerRecord=null;
+}
+function closeTicketViewerBackdrop(e){if(e.target?.id==='ticketViewerModal')closeTicketViewer();}
+
+async function shareCurrentTicketFile(){
+  const x=ticketViewerRecord;
+  if(!x||!x.blob)return;
+  try{
+    const file=new File([x.blob],x.name||x.title||'ticket',{type:x.type||x.blob.type||'application/octet-stream'});
+    if(navigator.share && (!navigator.canShare || navigator.canShare({files:[file]}))){
+      await navigator.share({files:[file],title:x.title||x.name||'כרטיס'});
+      return;
+    }
+  }catch(err){
+    if(err?.name==='AbortError')return;
+    console.warn('Native share unavailable',err);
+  }
+  // Fallback: opening the already-created URL is synchronous from this button tap.
+  if(ticketViewerObjectUrl){
+    const a=document.createElement('a');
+    a.href=ticketViewerObjectUrl;
+    a.target='_blank';
+    a.rel='noopener';
+    a.download=x.name||'ticket';
+    document.body.appendChild(a);a.click();a.remove();
+  }
+}
+/* ===== END V47 ===== */
+</script>
+
+\n<script>\n/* ===== V48 — iPhone: open viewer synchronously on tap, then load file ===== */\nasync function openTicketFile(id){\n  const modal=document.getElementById('ticketViewerModal');\n  const body=document.getElementById('ticketViewerBody');\n  const title=document.getElementById('ticketViewerTitle');\n  const meta=document.getElementById('ticketViewerMeta');\n  if(!modal||!body)return;\n\n  // Critical for iPhone/PWA: show the viewer during the original user tap.\n  modal.classList.add('open');\n  document.body.classList.add('ticket-viewer-open');\n  title.textContent='פותח כרטיס…';\n  meta.textContent='';\n  body.innerHTML='<div class="ticket-viewer-fallback"><b>טוען את הקובץ…</b></div>';\n\n  try{\n    const x=await getTicketById(id);\n    if(!x||!x.blob)throw new Error('missing file');\n    if(ticketViewerObjectUrl)URL.revokeObjectURL(ticketViewerObjectUrl);\n    ticketViewerRecord=x;\n    ticketViewerObjectUrl=URL.createObjectURL(x.blob);\n    title.textContent=x.title||x.name||'כרטיס';\n    meta.textContent=`${x.type||x.blob.type||'קובץ'} · ${fmtTicketSize(x.size||x.blob.size||0)}`;\n    body.innerHTML='';\n    const type=(x.type||x.blob.type||'').toLowerCase();\n    const name=(x.name||'').toLowerCase();\n\n    if(type.startsWith('image/')){\n      const img=document.createElement('img');\n      img.src=ticketViewerObjectUrl; img.alt=x.title||x.name||'תמונה';\n      body.appendChild(img);\n      return;\n    }\n\n    if(type==='application/pdf'||name.endsWith('.pdf')){\n      const wrap=document.createElement('div');\n      wrap.style.cssText='width:100%;height:100%;display:flex;flex-direction:column;gap:8px';\n      const iframe=document.createElement('iframe');\n      iframe.title=x.title||x.name||'PDF';\n      iframe.style.cssText='flex:1;width:100%;min-height:0;border:0;border-radius:14px;background:#fff';\n      iframe.src=ticketViewerObjectUrl;\n      const nativeBtn=document.createElement('button');\n      nativeBtn.type='button'; nativeBtn.textContent='↗ פתח / שתף באייפון';\n      nativeBtn.style.cssText='flex:0 0 auto;margin:0 4px 2px;min-height:48px';\n      nativeBtn.onclick=shareCurrentTicketFile;\n      wrap.appendChild(iframe); wrap.appendChild(nativeBtn); body.appendChild(wrap);\n      return;\n    }\n\n    body.innerHTML='<div class="ticket-viewer-fallback"><b>הקובץ מוכן.</b><br>לתצוגה באייפון לחץ על הכפתור.<br><button type="button" onclick="shareCurrentTicketFile()">↗ פתח / שתף באייפון</button></div>';\n  }catch(err){\n    console.error('V48 open file failed',err);\n    title.textContent='לא ניתן לפתוח';\n    body.innerHTML='<div class="ticket-viewer-fallback"><b>לא הצלחתי לטעון את הקובץ.</b><br>אפשר לסגור ולנסות שוב.</div>';\n  }\n}\n/* ===== END V48 ===== */\n</script>\n
+<script>
+/* ===== V49 — full-page PDF viewer on iPhone ===== */
+async function openTicketFile(id){
+  const modal=document.getElementById('ticketViewerModal');
+  const body=document.getElementById('ticketViewerBody');
+  const title=document.getElementById('ticketViewerTitle');
+  const meta=document.getElementById('ticketViewerMeta');
+  if(!modal||!body)return;
+
+  modal.classList.add('open');
+  document.body.classList.add('ticket-viewer-open');
+  title.textContent='פותח כרטיס…';
+  meta.textContent='';
+  body.innerHTML='<div class="ticket-viewer-fallback"><b>טוען את הקובץ…</b></div>';
+
+  try{
+    const x=await getTicketById(id);
+    if(!x||!x.blob)throw new Error('missing file');
+    if(ticketViewerObjectUrl)URL.revokeObjectURL(ticketViewerObjectUrl);
+    ticketViewerRecord=x;
+    ticketViewerObjectUrl=URL.createObjectURL(x.blob);
+    title.textContent=x.title||x.name||'כרטיס';
+    meta.textContent=`${x.type||x.blob.type||'קובץ'} · ${fmtTicketSize(x.size||x.blob.size||0)}`;
+    body.innerHTML='';
+    const type=(x.type||x.blob.type||'').toLowerCase();
+    const name=(x.name||'').toLowerCase();
+
+    if(type.startsWith('image/')){
+      const img=document.createElement('img');
+      img.src=ticketViewerObjectUrl;
+      img.alt=x.title||x.name||'תמונה';
+      body.appendChild(img);
+      return;
+    }
+
+    if(type==='application/pdf'||name.endsWith('.pdf')){
+      body.style.padding='0';
+      body.style.overflow='hidden';
+      body.style.position='relative';
+      const frame=document.createElement('iframe');
+      frame.title=x.title||x.name||'PDF';
+      frame.setAttribute('allowfullscreen','');
+      frame.style.cssText='position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:0;background:#fff;display:block';
+      // Fit the whole PDF page where the browser PDF viewer supports PDF open parameters.
+      frame.src=ticketViewerObjectUrl+'#view=Fit&zoom=page-fit';
+      body.appendChild(frame);
+      return;
+    }
+
+    body.style.padding='10px';
+    body.style.overflow='auto';
+    body.style.position='';
+    body.innerHTML='<div class="ticket-viewer-fallback"><b>הקובץ מוכן.</b><br><button type="button" onclick="shareCurrentTicketFile()">↗ פתח / שתף באייפון</button></div>';
+  }catch(err){
+    console.error('V49 open file failed',err);
+    title.textContent='לא ניתן לפתוח';
+    body.innerHTML='<div class="ticket-viewer-fallback"><b>לא הצלחתי לטעון את הקובץ.</b></div>';
+  }
+}
+
+const _v49CloseTicketViewer=closeTicketViewer;
+closeTicketViewer=function(revoke=true){
+  const body=document.getElementById('ticketViewerBody');
+  if(body){body.style.padding='10px';body.style.overflow='auto';body.style.position='';}
+  return _v49CloseTicketViewer(revoke);
+};
+/* ===== END V49 ===== */
+</script>
+
+<script>
+/* ===== V50 — multi-page PDF reader for iPhone ===== */
+let v50PdfJsPromise=null;
+function loadV50PdfJs(){
+  if(window.pdfjsLib)return Promise.resolve(window.pdfjsLib);
+  if(v50PdfJsPromise)return v50PdfJsPromise;
+  v50PdfJsPromise=new Promise((resolve,reject)=>{
+    const sc=document.createElement('script');
+    sc.src='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+    sc.onload=()=>{
+      if(!window.pdfjsLib)return reject(new Error('PDF.js unavailable'));
+      window.pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+      resolve(window.pdfjsLib);
+    };
+    sc.onerror=()=>reject(new Error('PDF.js load failed'));
+    document.head.appendChild(sc);
+  });
+  return v50PdfJsPromise;
+}
+
+async function v50RenderPdf(blob,body,meta){
+  const pdfjs=await loadV50PdfJs();
+  const bytes=new Uint8Array(await blob.arrayBuffer());
+  const pdf=await pdfjs.getDocument({data:bytes}).promise;
+  meta.textContent=`PDF · ${pdf.numPages} ${pdf.numPages===1?'עמוד':'עמודים'} · ${fmtTicketSize(blob.size||0)}`;
+  body.innerHTML='';
+  body.style.cssText='padding:10px;overflow-y:auto;overflow-x:hidden;position:relative;-webkit-overflow-scrolling:touch;background:#d9d9dd';
+  const pages=document.createElement('div');
+  pages.style.cssText='display:flex;flex-direction:column;gap:12px;width:100%;align-items:center;padding-bottom:18px';
+  body.appendChild(pages);
+  for(let n=1;n<=pdf.numPages;n++){
+    const holder=document.createElement('div');
+    holder.style.cssText='width:100%;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.14);flex:0 0 auto';
+    const canvas=document.createElement('canvas');
+    canvas.style.cssText='display:block;width:100%;height:auto;background:#fff';
+    holder.appendChild(canvas);pages.appendChild(holder);
+    const page=await pdf.getPage(n);
+    const base=page.getViewport({scale:1});
+    const cssWidth=Math.max(280,body.clientWidth-20);
+    const dpr=Math.min(window.devicePixelRatio||1,2);
+    const viewport=page.getViewport({scale:(cssWidth/base.width)*dpr});
+    canvas.width=Math.floor(viewport.width);canvas.height=Math.floor(viewport.height);
+    canvas.style.width=cssWidth+'px';canvas.style.height=(viewport.height/dpr)+'px';
+    await page.render({canvasContext:canvas.getContext('2d',{alpha:false}),viewport}).promise;
+  }
+}
+
+async function openTicketFile(id){
+  const modal=document.getElementById('ticketViewerModal'), body=document.getElementById('ticketViewerBody');
+  const title=document.getElementById('ticketViewerTitle'), meta=document.getElementById('ticketViewerMeta');
+  if(!modal||!body)return;
+  modal.classList.add('open');document.body.classList.add('ticket-viewer-open');
+  title.textContent='פותח כרטיס…';meta.textContent='';
+  body.style.cssText='padding:10px;overflow:auto;position:relative';
+  body.innerHTML='<div class="ticket-viewer-fallback"><b>טוען את הקובץ…</b></div>';
+  try{
+    const x=await getTicketById(id); if(!x||!x.blob)throw new Error('missing file');
+    if(ticketViewerObjectUrl)URL.revokeObjectURL(ticketViewerObjectUrl);
+    ticketViewerRecord=x;ticketViewerObjectUrl=URL.createObjectURL(x.blob);
+    title.textContent=x.title||x.name||'כרטיס';
+    const type=(x.type||x.blob.type||'').toLowerCase(),name=(x.name||'').toLowerCase();
+    if(type==='application/pdf'||name.endsWith('.pdf')){
+      try{await v50RenderPdf(x.blob,body,meta);}
+      catch(pdfErr){
+        console.warn('V50 PDF.js failed',pdfErr);
+        meta.textContent='PDF · '+fmtTicketSize(x.size||x.blob.size||0);
+        body.innerHTML='<div class="ticket-viewer-fallback"><b>לא הצלחתי לטעון את כל עמודי ה-PDF.</b><br><button type="button" onclick="shareCurrentTicketFile()">↗ פתח / שתף באייפון</button></div>';
+      }
+      return;
+    }
+    meta.textContent=`${type||'קובץ'} · ${fmtTicketSize(x.size||x.blob.size||0)}`;
+    body.innerHTML='';
+    if(type.startsWith('image/')){const img=document.createElement('img');img.src=ticketViewerObjectUrl;img.alt=x.title||x.name||'תמונה';img.style.cssText='max-width:100%;height:auto;display:block;margin:auto';body.appendChild(img);return;}
+    body.innerHTML='<div class="ticket-viewer-fallback"><b>הקובץ מוכן.</b><br><button type="button" onclick="shareCurrentTicketFile()">↗ פתח / שתף באייפון</button></div>';
+  }catch(err){console.error('V50 open failed',err);title.textContent='לא ניתן לפתוח';body.innerHTML='<div class="ticket-viewer-fallback"><b>לא הצלחתי לטעון את הקובץ.</b></div>';}
+}
+/* ===== END V50 ===== */
+</script>
+
+<style>
+/* ===== V51 — keep PDF page 1 fully below the fixed viewer header ===== */
+#ticketViewerBody.v51-pdf-body{
+  display:block!important;
+  align-items:initial!important;
+  justify-content:initial!important;
+  min-height:0!important;
+  padding:14px 10px 22px!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  scroll-padding-top:14px!important;
+  -webkit-overflow-scrolling:touch!important;
+  overscroll-behavior:contain;
+}
+#ticketViewerBody.v51-pdf-body .v51-pdf-pages{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
+  width:100%;
+  margin:0!important;
+  padding:0 0 18px!important;
+}
+</style>
+<script>
+/* ===== V51 — PDF top/start-position fix ===== */
+async function v50RenderPdf(blob,body,meta){
+  const pdfjs=await loadV50PdfJs();
+  const bytes=new Uint8Array(await blob.arrayBuffer());
+  const pdf=await pdfjs.getDocument({data:bytes}).promise;
+  meta.textContent=`PDF · ${pdf.numPages} ${pdf.numPages===1?'עמוד':'עמודים'} · ${fmtTicketSize(blob.size||0)}`;
+  body.innerHTML='';
+  body.classList.add('v51-pdf-body');
+  const pages=document.createElement('div');
+  pages.className='v51-pdf-pages';
+  body.appendChild(pages);
+  // iPhone Safari can preserve an old scroll offset in the modal. Force the PDF to start at page 1.
+  body.scrollTop=0;
+  for(let n=1;n<=pdf.numPages;n++){
+    const holder=document.createElement('div');
+    holder.style.cssText='width:100%;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.14);flex:0 0 auto';
+    const canvas=document.createElement('canvas');
+    canvas.style.cssText='display:block;width:100%;height:auto;background:#fff';
+    holder.appendChild(canvas);pages.appendChild(holder);
+    const page=await pdf.getPage(n);
+    const base=page.getViewport({scale:1});
+    const cssWidth=Math.max(280,body.clientWidth-20);
+    const dpr=Math.min(window.devicePixelRatio||1,2);
+    const viewport=page.getViewport({scale:(cssWidth/base.width)*dpr});
+    canvas.width=Math.floor(viewport.width);canvas.height=Math.floor(viewport.height);
+    canvas.style.width=cssWidth+'px';canvas.style.height=(viewport.height/dpr)+'px';
+    await page.render({canvasContext:canvas.getContext('2d',{alpha:false}),viewport}).promise;
+    if(n===1){
+      requestAnimationFrame(()=>{ body.scrollTop=0; pages.scrollIntoView({block:'start'}); body.scrollTop=0; });
+    }
+  }
+  requestAnimationFrame(()=>{body.scrollTop=0;});
+  setTimeout(()=>{body.scrollTop=0;},60);
+}
+
+// Clear V51 PDF-only layout whenever the viewer closes or a different file starts loading.
+const v51OriginalClose=closeTicketViewer;
+closeTicketViewer=function(){
+  document.getElementById('ticketViewerBody')?.classList.remove('v51-pdf-body');
+  return v51OriginalClose.apply(this,arguments);
+};
+/* ===== END V51 ===== */
+</script>
+
+
+<style>
+/* ===== V52 — reliable iPhone PDF loading ===== */
+#ticketViewerBody.v52-pdf-body{
+  display:block!important;
+  padding:16px 10px 24px!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  -webkit-overflow-scrolling:touch!important;
+  background:#d9d9dd!important;
+}
+.v52-pdf-pages{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
+  width:100%;
+}
+.v52-pdf-page{
+  width:100%;
+  background:#fff;
+  border-radius:10px;
+  overflow:hidden;
+  box-shadow:0 2px 10px rgba(0,0,0,.14);
+}
+.v52-pdf-page canvas{display:block;width:100%;height:auto;background:#fff}
+</style>
+<script>
+/* ===== V52 — robust PDF.js load + timeouts + correct top position ===== */
+function v52Timeout(promise, ms, label){
+  return Promise.race([
+    promise,
+    new Promise((_,reject)=>setTimeout(()=>reject(new Error(label||'timeout')),ms))
+  ]);
+}
+
+async function v52LoadPdfJs(){
+  if(window.pdfjsLib) return window.pdfjsLib;
+
+  const sources=[
+    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js',
+    'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js'
+  ];
+
+  let lastError=null;
+  for(const src of sources){
+    try{
+      await v52Timeout(new Promise((resolve,reject)=>{
+        const old=[...document.scripts].find(s=>s.src===src);
+        if(old && window.pdfjsLib) return resolve();
+        const sc=document.createElement('script');
+        sc.src=src;
+        sc.async=true;
+        sc.onload=resolve;
+        sc.onerror=()=>reject(new Error('script load failed'));
+        document.head.appendChild(sc);
+      }),8000,'PDF reader load timeout');
+      if(window.pdfjsLib){
+        window.pdfjsLib.GlobalWorkerOptions.workerSrc=
+          'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        return window.pdfjsLib;
+      }
+    }catch(e){ lastError=e; }
+  }
+  throw lastError||new Error('PDF.js unavailable');
+}
+
+async function v52RenderPdf(blob,body,meta){
+  body.classList.remove('v51-pdf-body');
+  body.classList.add('v52-pdf-body');
+  body.scrollTop=0;
+  body.innerHTML='<div class="ticket-viewer-fallback"><b>מכין את ה-PDF…</b><br><small>זה עשוי לקחת כמה שניות בקובץ גדול.</small></div>';
+
+  const pdfjs=await v52LoadPdfJs();
+  body.innerHTML='<div class="ticket-viewer-fallback"><b>קורא את העמודים…</b></div>';
+
+  const bytes=new Uint8Array(await v52Timeout(blob.arrayBuffer(),8000,'file read timeout'));
+  const loadingTask=pdfjs.getDocument({data:bytes});
+  const pdf=await v52Timeout(loadingTask.promise,15000,'PDF open timeout');
+
+  meta.textContent=`PDF · ${pdf.numPages} ${pdf.numPages===1?'עמוד':'עמודים'} · ${fmtTicketSize(blob.size||0)}`;
+  body.innerHTML='';
+
+  const pages=document.createElement('div');
+  pages.className='v52-pdf-pages';
+  body.appendChild(pages);
+
+  // Render sequentially. The first page becomes visible immediately,
+  // then the remaining pages continue below it.
+  for(let n=1;n<=pdf.numPages;n++){
+    const holder=document.createElement('div');
+    holder.className='v52-pdf-page';
+    const canvas=document.createElement('canvas');
+    holder.appendChild(canvas);
+    pages.appendChild(holder);
+
+    const page=await v52Timeout(pdf.getPage(n),10000,'page load timeout');
+    const base=page.getViewport({scale:1});
+    const cssWidth=Math.max(260, body.clientWidth-20);
+    const dpr=Math.min(window.devicePixelRatio||1,2);
+    const viewport=page.getViewport({scale:(cssWidth/base.width)*dpr});
+
+    canvas.width=Math.max(1,Math.floor(viewport.width));
+    canvas.height=Math.max(1,Math.floor(viewport.height));
+    canvas.style.width=cssWidth+'px';
+    canvas.style.height=(viewport.height/dpr)+'px';
+
+    await v52Timeout(
+      page.render({canvasContext:canvas.getContext('2d',{alpha:false}),viewport}).promise,
+      15000,
+      'page render timeout'
+    );
+
+    if(n===1){
+      // Keep the top of page 1 visible without scrolling the whole document.
+      requestAnimationFrame(()=>{ body.scrollTop=0; });
+    }
+  }
+  requestAnimationFrame(()=>{body.scrollTop=0;});
+}
+
+async function openTicketFile(id){
+  const modal=document.getElementById('ticketViewerModal');
+  const body=document.getElementById('ticketViewerBody');
+  const title=document.getElementById('ticketViewerTitle');
+  const meta=document.getElementById('ticketViewerMeta');
+  if(!modal||!body)return;
+
+  modal.classList.add('open');
+  document.body.classList.add('ticket-viewer-open');
+  title.textContent='פותח כרטיס…';
+  meta.textContent='';
+  body.classList.remove('v51-pdf-body','v52-pdf-body');
+  body.style.cssText='padding:10px;overflow:auto;position:relative';
+  body.innerHTML='<div class="ticket-viewer-fallback"><b>טוען את הקובץ…</b></div>';
+
+  try{
+    const x=await v52Timeout(getTicketById(id),6000,'database timeout');
+    if(!x||!x.blob)throw new Error('missing file');
+
+    if(ticketViewerObjectUrl)URL.revokeObjectURL(ticketViewerObjectUrl);
+    ticketViewerRecord=x;
+    ticketViewerObjectUrl=URL.createObjectURL(x.blob);
+    title.textContent=x.title||x.name||'כרטיס';
+
+    const type=(x.type||x.blob.type||'').toLowerCase();
+    const name=(x.name||'').toLowerCase();
+
+    if(type==='application/pdf'||name.endsWith('.pdf')){
+      try{
+        await v52RenderPdf(x.blob,body,meta);
+      }catch(pdfErr){
+        console.error('V52 PDF failed',pdfErr);
+        meta.textContent='PDF · '+fmtTicketSize(x.size||x.blob.size||0);
+        body.classList.remove('v52-pdf-body');
+        body.innerHTML='<div class="ticket-viewer-fallback"><b>ה-PDF לא נטען בתצוגה הפנימית.</b><br><small>אפשר עדיין לפתוח אותו ישירות באייפון.</small><br><button type="button" onclick="shareCurrentTicketFile()">↗ פתח / שתף באייפון</button></div>';
+      }
+      return;
+    }
+
+    meta.textContent=`${type||'קובץ'} · ${fmtTicketSize(x.size||x.blob.size||0)}`;
+    body.innerHTML='';
+    if(type.startsWith('image/')){
+      const img=document.createElement('img');
+      img.src=ticketViewerObjectUrl;
+      img.alt=x.title||x.name||'תמונה';
+      img.style.cssText='max-width:100%;height:auto;display:block;margin:auto';
+      body.appendChild(img);
+      return;
+    }
+    body.innerHTML='<div class="ticket-viewer-fallback"><b>הקובץ מוכן.</b><br><button type="button" onclick="shareCurrentTicketFile()">↗ פתח / שתף באייפון</button></div>';
+  }catch(err){
+    console.error('V52 open failed',err);
+    title.textContent='לא ניתן לפתוח';
+    body.innerHTML='<div class="ticket-viewer-fallback"><b>לא הצלחתי לטעון את הקובץ.</b><br><button type="button" onclick="shareCurrentTicketFile()">↗ פתח / שתף באייפון</button></div>';
+  }
+}
+/* ===== END V52 ===== */
+</script>
+
+
+
+<style>
+/* ===== V53 — high-quality PDF rendering for iPhone ===== */
+#ticketViewerBody.v53-pdf-body{
+  display:block!important;
+  box-sizing:border-box!important;
+  padding:14px 8px 24px!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  -webkit-overflow-scrolling:touch!important;
+  background:#d9d9dd!important;
+}
+.v53-pdf-pages{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
+  width:100%;
+  margin:0;
+  padding:0;
+}
+.v53-pdf-page{
+  display:block;
+  width:100%;
+  max-width:100%;
+  margin:0;
+  padding:0;
+  background:#fff;
+  border-radius:8px;
+  overflow:hidden;
+  box-shadow:0 2px 10px rgba(0,0,0,.14);
+}
+.v53-pdf-page canvas{
+  display:block;
+  width:100%!important;
+  height:auto!important;
+  margin:0 auto;
+  background:#fff;
+}
+</style>
+<script>
+/* ===== V53 — preserve thin letters and fit the complete PDF page ===== */
+async function v53RenderPdf(blob,body,meta){
+  body.classList.remove('v51-pdf-body','v52-pdf-body');
+  body.classList.add('v53-pdf-body');
+  body.scrollTop=0;
+  body.innerHTML='<div class="ticket-viewer-fallback"><b>מכין תצוגת PDF איכותית…</b></div>';
+
+  const pdfjs=await v52LoadPdfJs();
+  const bytes=new Uint8Array(await v52Timeout(blob.arrayBuffer(),10000,'file read timeout'));
+
+  // Disable the worker for this in-memory iPhone viewer. This avoids worker/font races
+  // seen in Safari while still rendering every page as a bitmap canvas.
+  const loadingTask=pdfjs.getDocument({
+    data:bytes,
+    disableFontFace:false,
+    useSystemFonts:true,
+    isEvalSupported:true
+  });
+  const pdf=await v52Timeout(loadingTask.promise,18000,'PDF open timeout');
+
+  meta.textContent=`PDF · ${pdf.numPages} ${pdf.numPages===1?'עמוד':'עמודים'} · ${fmtTicketSize(blob.size||0)}`;
+  body.innerHTML='';
+
+  const pages=document.createElement('div');
+  pages.className='v53-pdf-pages';
+  body.appendChild(pages);
+
+  for(let n=1;n<=pdf.numPages;n++){
+    const holder=document.createElement('div');
+    holder.className='v53-pdf-page';
+    const canvas=document.createElement('canvas');
+    canvas.setAttribute('aria-label',`PDF page ${n}`);
+    holder.appendChild(canvas);
+    pages.appendChild(holder);
+
+    const page=await v52Timeout(pdf.getPage(n),10000,'page load timeout');
+    const base=page.getViewport({scale:1});
+
+    // Use the actual content width after padding. Render at the full iPhone DPR
+    // (up to 3x) so thin glyphs such as the I in ARIK do not disappear after scaling.
+    const available=Math.max(260, body.clientWidth-16);
+    const dpr=Math.min(Math.max(window.devicePixelRatio||1,2),3);
+    const cssScale=available/base.width;
+    const viewport=page.getViewport({scale:cssScale*dpr});
+
+    canvas.width=Math.max(1,Math.ceil(viewport.width));
+    canvas.height=Math.max(1,Math.ceil(viewport.height));
+    canvas.style.width=available+'px';
+    canvas.style.height=(viewport.height/dpr)+'px';
+
+    const ctx=canvas.getContext('2d',{alpha:false,desynchronized:false});
+    ctx.save();
+    ctx.fillStyle='#fff';
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.restore();
+
+    await v52Timeout(
+      page.render({
+        canvasContext:ctx,
+        viewport,
+        intent:'display',
+        background:'#ffffff'
+      }).promise,
+      20000,
+      'page render timeout'
+    );
+
+    // Release PDF.js page resources after the bitmap is complete.
+    if(typeof page.cleanup==='function') page.cleanup();
+    if(n===1) requestAnimationFrame(()=>{body.scrollTop=0;});
+  }
+  requestAnimationFrame(()=>{body.scrollTop=0;});
+  setTimeout(()=>{body.scrollTop=0;},80);
+}
+
+async function openTicketFile(id){
+  const modal=document.getElementById('ticketViewerModal');
+  const body=document.getElementById('ticketViewerBody');
+  const title=document.getElementById('ticketViewerTitle');
+  const meta=document.getElementById('ticketViewerMeta');
+  if(!modal||!body)return;
+
+  modal.classList.add('open');
+  document.body.classList.add('ticket-viewer-open');
+  title.textContent='פותח כרטיס…';
+  meta.textContent='';
+  body.classList.remove('v51-pdf-body','v52-pdf-body','v53-pdf-body');
+  body.style.cssText='padding:10px;overflow:auto;position:relative';
+  body.innerHTML='<div class="ticket-viewer-fallback"><b>טוען את הקובץ…</b></div>';
+
+  try{
+    const x=await v52Timeout(getTicketById(id),6000,'database timeout');
+    if(!x||!x.blob)throw new Error('missing file');
+
+    if(ticketViewerObjectUrl)URL.revokeObjectURL(ticketViewerObjectUrl);
+    ticketViewerRecord=x;
+    ticketViewerObjectUrl=URL.createObjectURL(x.blob);
+    title.textContent=x.title||x.name||'כרטיס';
+
+    const type=(x.type||x.blob.type||'').toLowerCase();
+    const name=(x.name||'').toLowerCase();
+
+    if(type==='application/pdf'||name.endsWith('.pdf')){
+      try{
+        await v53RenderPdf(x.blob,body,meta);
+      }catch(pdfErr){
+        console.error('V53 PDF failed',pdfErr);
+        meta.textContent='PDF · '+fmtTicketSize(x.size||x.blob.size||0);
+        body.classList.remove('v53-pdf-body');
+        body.innerHTML='<div class="ticket-viewer-fallback"><b>ה-PDF לא נטען בתצוגה הפנימית.</b><br><small>אפשר עדיין לפתוח אותו ישירות באייפון.</small><br><button type="button" onclick="shareCurrentTicketFile()">↗ פתח / שתף באייפון</button></div>';
+      }
+      return;
+    }
+
+    meta.textContent=`${type||'קובץ'} · ${fmtTicketSize(x.size||x.blob.size||0)}`;
+    body.innerHTML='';
+    if(type.startsWith('image/')){
+      const img=document.createElement('img');
+      img.src=ticketViewerObjectUrl;
+      img.alt=x.title||x.name||'תמונה';
+      img.style.cssText='max-width:100%;height:auto;display:block;margin:auto';
+      body.appendChild(img);
+      return;
+    }
+    body.innerHTML='<div class="ticket-viewer-fallback"><b>הקובץ מוכן.</b><br><button type="button" onclick="shareCurrentTicketFile()">↗ פתח / שתף באייפון</button></div>';
+  }catch(err){
+    console.error('V53 open failed',err);
+    title.textContent='לא ניתן לפתוח';
+    body.innerHTML='<div class="ticket-viewer-fallback"><b>לא הצלחתי לטעון את הקובץ.</b><br><button type="button" onclick="shareCurrentTicketFile()">↗ פתח / שתף באייפון</button></div>';
+  }
+}
+
+const v53OriginalClose=closeTicketViewer;
+closeTicketViewer=function(){
+  document.getElementById('ticketViewerBody')?.classList.remove('v53-pdf-body');
+  return v53OriginalClose.apply(this,arguments);
+};
+/* ===== END V53 ===== */
+</script>
+
+<style>
+/* ===== V54 — stable iPhone PDF viewer ===== */
+#ticketViewerBody.v54-pdf-body{
+  display:block!important;
+  box-sizing:border-box!important;
+  padding:58px 8px 24px!important;
+  overflow:auto!important;
+  -webkit-overflow-scrolling:touch!important;
+  overscroll-behavior:contain!important;
+  background:#d9d9dd!important;
+  touch-action:pan-x pan-y!important;
+}
+.v54-pdf-toolbar{
+  position:absolute;
+  top:56px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:30;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:6px 8px;
+  border-radius:14px;
+  background:rgba(20,20,22,.92);
+  box-shadow:0 4px 18px rgba(0,0,0,.22);
+  backdrop-filter:blur(12px);
+}
+.v54-pdf-toolbar button{
+  width:42px!important;
+  height:38px!important;
+  min-height:38px!important;
+  padding:0!important;
+  margin:0!important;
+  border-radius:10px!important;
+  border:1px solid rgba(255,255,255,.16)!important;
+  background:#2b2b2f!important;
+  color:#fff!important;
+  font-size:20px!important;
+  font-weight:800!important;
+}
+.v54-pdf-toolbar .v54-reset{
+  width:auto!important;
+  min-width:58px!important;
+  padding:0 10px!important;
+  font-size:13px!important;
+}
+.v54-pdf-pages{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:12px;
+  width:max-content;
+  min-width:100%;
+  margin:0;
+  padding:0;
+}
+.v54-pdf-page{
+  display:block;
+  margin:0 auto;
+  padding:0;
+  background:#fff;
+  border-radius:8px;
+  overflow:hidden;
+  box-shadow:0 2px 10px rgba(0,0,0,.14);
+  flex:0 0 auto;
+}
+.v54-pdf-page canvas{
+  display:block;
+  width:100%!important;
+  height:auto!important;
+  background:#fff;
+}
+</style>
+
+<script>
+/* ===== V54 — font-safe + memory-safe PDF rendering, stable zoom ===== */
+let v54Zoom=1;
+let v54GestureBlockInstalled=false;
+
+function v54InstallGestureBlock(){
+  if(v54GestureBlockInstalled) return;
+  v54GestureBlockInstalled=true;
+  const modal=document.getElementById('ticketViewerModal');
+  if(!modal) return;
+
+  // iOS Safari can dismiss/reload a heavy canvas view during native pinch zoom.
+  // Block native pinch only inside the PDF modal; use the + / − controls instead.
+  ['gesturestart','gesturechange','gestureend'].forEach(type=>{
+    modal.addEventListener(type,e=>{
+      if(document.getElementById('ticketViewerBody')?.classList.contains('v54-pdf-body')){
+        e.preventDefault();
+      }
+    },{passive:false});
+  });
+}
+
+function v54ApplyZoom(){
+  const body=document.getElementById('ticketViewerBody');
+  if(!body) return;
+  const pages=body.querySelectorAll('.v54-pdf-page');
+  pages.forEach(page=>{
+    const base=parseFloat(page.dataset.baseWidth||'0');
+    if(base>0) page.style.width=(base*v54Zoom)+'px';
+  });
+  const label=document.getElementById('v54ZoomLabel');
+  if(label) label.textContent=Math.round(v54Zoom*100)+'%';
+}
+
+function v54ZoomBy(delta){
+  v54Zoom=Math.max(0.8,Math.min(2.2,+(v54Zoom+delta).toFixed(2)));
+  v54ApplyZoom();
+}
+
+function v54ResetZoom(){
+  v54Zoom=1;
+  v54ApplyZoom();
+  const body=document.getElementById('ticketViewerBody');
+  if(body){body.scrollLeft=0;body.scrollTop=0;}
+}
+
+async function v54RenderPdf(blob,body,meta){
+  body.classList.remove('v51-pdf-body','v52-pdf-body','v53-pdf-body');
+  body.classList.add('v54-pdf-body');
+  v54InstallGestureBlock();
+  v54Zoom=1;
+  body.scrollTop=0;
+  body.scrollLeft=0;
+  body.innerHTML='<div class="ticket-viewer-fallback"><b>מכין PDF לתצוגה יציבה…</b></div>';
+
+  const pdfjs=await v52LoadPdfJs();
+  const bytes=new Uint8Array(await v52Timeout(blob.arrayBuffer(),10000,'file read timeout'));
+
+  // Important change from V53:
+  // disableFontFace makes PDF.js draw glyphs with its internal font/path renderer
+  // instead of relying on Safari font faces, which can drop thin letters/glyphs.
+  const loadingTask=pdfjs.getDocument({
+    data:bytes,
+    disableFontFace:true,
+    useSystemFonts:false,
+    isEvalSupported:true
+  });
+  const pdf=await v52Timeout(loadingTask.promise,18000,'PDF open timeout');
+
+  meta.textContent=`PDF · ${pdf.numPages} ${pdf.numPages===1?'עמוד':'עמודים'} · ${fmtTicketSize(blob.size||0)}`;
+  body.innerHTML='';
+
+  const toolbar=document.createElement('div');
+  toolbar.className='v54-pdf-toolbar';
+  toolbar.innerHTML=
+    '<button type="button" onclick="v54ZoomBy(-0.2)" aria-label="הקטן">−</button>'+
+    '<button type="button" class="v54-reset" onclick="v54ResetZoom()" id="v54ZoomLabel">100%</button>'+
+    '<button type="button" onclick="v54ZoomBy(0.2)" aria-label="הגדל">+</button>';
+  document.querySelector('.ticket-viewer-sheet')?.appendChild(toolbar);
+
+  const pages=document.createElement('div');
+  pages.className='v54-pdf-pages';
+  body.appendChild(pages);
+
+  for(let n=1;n<=pdf.numPages;n++){
+    const holder=document.createElement('div');
+    holder.className='v54-pdf-page';
+
+    const canvas=document.createElement('canvas');
+    canvas.setAttribute('aria-label',`PDF page ${n}`);
+    holder.appendChild(canvas);
+    pages.appendChild(holder);
+
+    const page=await v52Timeout(pdf.getPage(n),10000,'page load timeout');
+    const base=page.getViewport({scale:1});
+
+    const available=Math.max(260,body.clientWidth-16);
+    const cssScale=available/base.width;
+
+    // Keep enough resolution for text but cap memory so iPhone Safari does not kill the view.
+    let renderScale=cssScale*Math.min(Math.max(window.devicePixelRatio||1,1.5),2);
+    let viewport=page.getViewport({scale:renderScale});
+    const maxPixels=5_000_000;
+    const pixels=viewport.width*viewport.height;
+    if(pixels>maxPixels){
+      renderScale*=Math.sqrt(maxPixels/pixels);
+      viewport=page.getViewport({scale:renderScale});
+    }
+
+    canvas.width=Math.max(1,Math.ceil(viewport.width));
+    canvas.height=Math.max(1,Math.ceil(viewport.height));
+    holder.dataset.baseWidth=available;
+    holder.style.width=available+'px';
+
+    const cssHeight=available*(base.height/base.width);
+    canvas.style.width='100%';
+    canvas.style.height=cssHeight+'px';
+
+    const ctx=canvas.getContext('2d',{alpha:false});
+    ctx.fillStyle='#fff';
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    await v52Timeout(
+      page.render({
+        canvasContext:ctx,
+        viewport,
+        intent:'display',
+        background:'#ffffff'
+      }).promise,
+      20000,
+      'page render timeout'
+    );
+
+    if(typeof page.cleanup==='function') page.cleanup();
+
+    // Yield between pages to keep Safari responsive and reduce crash risk.
+    await new Promise(resolve=>setTimeout(resolve,20));
+  }
+
+  body.scrollTop=0;
+  body.scrollLeft=0;
+}
+
+async function openTicketFile(id){
+  const modal=document.getElementById('ticketViewerModal');
+  const body=document.getElementById('ticketViewerBody');
+  const title=document.getElementById('ticketViewerTitle');
+  const meta=document.getElementById('ticketViewerMeta');
+  if(!modal||!body)return;
+
+  // Remove any old V54 toolbar from a prior file.
+  document.querySelector('.ticket-viewer-sheet > .v54-pdf-toolbar')?.remove();
+
+  modal.classList.add('open');
+  document.body.classList.add('ticket-viewer-open');
+  title.textContent='פותח כרטיס…';
+  meta.textContent='';
+  body.classList.remove('v51-pdf-body','v52-pdf-body','v53-pdf-body','v54-pdf-body');
+  body.style.cssText='padding:10px;overflow:auto;position:relative';
+  body.innerHTML='<div class="ticket-viewer-fallback"><b>טוען את הקובץ…</b></div>';
+
+  try{
+    const x=await v52Timeout(getTicketById(id),6000,'database timeout');
+    if(!x||!x.blob)throw new Error('missing file');
+
+    if(ticketViewerObjectUrl)URL.revokeObjectURL(ticketViewerObjectUrl);
+    ticketViewerRecord=x;
+    ticketViewerObjectUrl=URL.createObjectURL(x.blob);
+    title.textContent=x.title||x.name||'כרטיס';
+
+    const type=(x.type||x.blob.type||'').toLowerCase();
+    const name=(x.name||'').toLowerCase();
+
+    if(type==='application/pdf'||name.endsWith('.pdf')){
+      try{
+        await v54RenderPdf(x.blob,body,meta);
+      }catch(pdfErr){
+        console.error('V54 PDF failed',pdfErr);
+        meta.textContent='PDF · '+fmtTicketSize(x.size||x.blob.size||0);
+        body.classList.remove('v54-pdf-body');
+        document.querySelector('.ticket-viewer-sheet > .v54-pdf-toolbar')?.remove();
+        body.innerHTML='<div class="ticket-viewer-fallback"><b>ה-PDF לא נטען בתצוגה הפנימית.</b><br><button type="button" onclick="shareCurrentTicketFile()">↗ פתח / שתף באייפון</button></div>';
+      }
+      return;
+    }
+
+    meta.textContent=`${type||'קובץ'} · ${fmtTicketSize(x.size||x.blob.size||0)}`;
+    body.innerHTML='';
+    if(type.startsWith('image/')){
+      const img=document.createElement('img');
+      img.src=ticketViewerObjectUrl;
+      img.alt=x.title||x.name||'תמונה';
+      img.style.cssText='max-width:100%;height:auto;display:block;margin:auto';
+      body.appendChild(img);
+      return;
+    }
+    body.innerHTML='<div class="ticket-viewer-fallback"><b>הקובץ מוכן.</b><br><button type="button" onclick="shareCurrentTicketFile()">↗ פתח / שתף באייפון</button></div>';
+  }catch(err){
+    console.error('V54 open failed',err);
+    title.textContent='לא ניתן לפתוח';
+    body.innerHTML='<div class="ticket-viewer-fallback"><b>לא הצלחתי לטעון את הקובץ.</b><br><button type="button" onclick="shareCurrentTicketFile()">↗ פתח / שתף באייפון</button></div>';
+  }
+}
+
+const v54OriginalClose=closeTicketViewer;
+closeTicketViewer=function(){
+  document.querySelector('.ticket-viewer-sheet > .v54-pdf-toolbar')?.remove();
+  document.getElementById('ticketViewerBody')?.classList.remove('v54-pdf-body');
+  return v54OriginalClose.apply(this,arguments);
+};
+/* ===== END V54 ===== */
+</script>
+
+
+<style>
+/* ===== V55 — internal two-finger pinch zoom for iPhone PDF viewer ===== */
+#ticketViewerBody.v54-pdf-body{
+  touch-action:pan-x pan-y!important;
+}
+</style>
+
+<script>
+/* ===== V55 — pinch zoom stays inside the PDF viewer ===== */
+let v55PinchInstalled=false;
+let v55PinchStartDistance=0;
+let v55PinchStartZoom=1;
+let v55AnchorX=0;
+let v55AnchorY=0;
+let v55StartScrollLeft=0;
+let v55StartScrollTop=0;
+
+function v55Distance(a,b){
+  return Math.hypot(b.clientX-a.clientX,b.clientY-a.clientY);
+}
+function v55Center(a,b){
+  return {x:(a.clientX+b.clientX)/2,y:(a.clientY+b.clientY)/2};
+}
+
+function v55InstallPinchZoom(){
+  if(v55PinchInstalled) return;
+  const body=document.getElementById('ticketViewerBody');
+  const modal=document.getElementById('ticketViewerModal');
+  if(!body || !modal) return;
+  v55PinchInstalled=true;
+
+  ['gesturestart','gesturechange','gestureend'].forEach(type=>{
+    modal.addEventListener(type,e=>{
+      if(body.classList.contains('v54-pdf-body')) e.preventDefault();
+    },{passive:false});
+  });
+
+  body.addEventListener('touchstart',e=>{
+    if(!body.classList.contains('v54-pdf-body') || e.touches.length!==2) return;
+
+    const a=e.touches[0], b=e.touches[1];
+    v55PinchStartDistance=v55Distance(a,b);
+    v55PinchStartZoom=v54Zoom;
+
+    const c=v55Center(a,b);
+    const r=body.getBoundingClientRect();
+    v55AnchorX=c.x-r.left;
+    v55AnchorY=c.y-r.top;
+    v55StartScrollLeft=body.scrollLeft;
+    v55StartScrollTop=body.scrollTop;
+
+    e.preventDefault();
+  },{passive:false});
+
+  body.addEventListener('touchmove',e=>{
+    if(!body.classList.contains('v54-pdf-body') ||
+       e.touches.length!==2 ||
+       !v55PinchStartDistance) return;
+
+    const d=v55Distance(e.touches[0],e.touches[1]);
+    if(!d) return;
+
+    const newZoom=Math.max(0.8,Math.min(2.4,v55PinchStartZoom*(d/v55PinchStartDistance)));
+
+    const contentX=(v55StartScrollLeft+v55AnchorX)/v55PinchStartZoom;
+    const contentY=(v55StartScrollTop+v55AnchorY)/v55PinchStartZoom;
+
+    v54Zoom=newZoom;
+    v54ApplyZoom();
+
+    body.scrollLeft=Math.max(0,contentX*newZoom-v55AnchorX);
+    body.scrollTop=Math.max(0,contentY*newZoom-v55AnchorY);
+
+    e.preventDefault();
+  },{passive:false});
+
+  const finish=e=>{
+    if(!body.classList.contains('v54-pdf-body')) return;
+    if(!e.touches || e.touches.length<2){
+      v55PinchStartDistance=0;
+      const label=document.getElementById('v54ZoomLabel');
+      if(label) label.textContent=Math.round(v54Zoom*100)+'%';
+    }
+  };
+
+  body.addEventListener('touchend',finish,{passive:true});
+  body.addEventListener('touchcancel',finish,{passive:true});
+}
+
+const v55BaseRenderPdf=v54RenderPdf;
+v54RenderPdf=async function(blob,body,meta){
+  await v55BaseRenderPdf(blob,body,meta);
+  v55InstallPinchZoom();
+};
+/* ===== END V55 ===== */
+</script>
+
 </body>
 </html>
